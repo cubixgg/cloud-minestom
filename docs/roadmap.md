@@ -272,9 +272,9 @@ fallback shape.
       `@Argument`-annotated parameter resolves it automatically (spec §10 parity)
 - [x] Built-in mapper: `PlayerParser` → `Entity` (`singleEntity(true).onlyPlayers(true)`), plus the
       matching spec §5.2 table row (see the correction note above)
-- [ ] Unit test: `PlayerParser` parses an exact online name, rejects an unknown/offline name with the
+- [x] Unit test: `PlayerParser` parses an exact online name, rejects an unknown/offline name with the
       correct exception type
-- [ ] Unit test: `PlayerParser` suggestions list currently-online names only
+- [x] Unit test: `PlayerParser` suggestions list currently-online names only
 - [ ] `@EnvTest`: `PlayerParser` resolves and suggests correctly against real virtual players
 
 ## P9 — Annotation commands
