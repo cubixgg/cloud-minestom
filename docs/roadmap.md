@@ -122,13 +122,13 @@ Gets one full round trip working — register, execute, suggest — before nativ
       `manager.suggestionFactory().suggestImmediately(mappedSender, input)`, fills the Minestom
       `Suggestion` with the results
 - [x] Attach `CloudSuggestionCallback` to the fallback `ArgumentStringArray`
-- [ ] Unit test: registering a Cloud command against a fake registration sink produces exactly one
+- [x] Unit test: registering a Cloud command against a fake registration sink produces exactly one
       native `Command` with the expected name and aliases
-- [ ] Unit test: registering two syntaxes under the same root literal produces exactly one native
+- [x] Unit test: registering two syntaxes under the same root literal produces exactly one native
       `Command` (root de-duplication)
-- [ ] Unit test: suggestion callback matches a partially-typed argument
-- [ ] Unit test: suggestion callback returns everything after a trailing-space placeholder
-- [ ] Unit test: suggestion callback asks Cloud with the whole line including the root literal, not
+- [x] Unit test: suggestion callback matches a partially-typed argument
+- [x] Unit test: suggestion callback returns everything after a trailing-space placeholder
+- [x] Unit test: suggestion callback asks Cloud with the whole line including the root literal, not
       just the trailing text
 - [ ] First `@EnvTest`: register a Cloud command with a handler that sends a message, connect a
       virtual player, run the command, assert the player received the message
