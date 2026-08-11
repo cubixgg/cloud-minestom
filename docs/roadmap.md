@@ -68,8 +68,9 @@ Turns the current single-module scaffold into the multi-module layout from spec 
       merged into local history rather than recreated
 - [x] Add root `README.md`: what the project is, links to `spec.md`/`roadmap.md`/`docs/`, build badge
       placeholder — landed with the rest of the project docs before this phase started
-- [ ] Add GitHub Actions workflow `.github/workflows/build.yml`: `./gradlew build` on push and PR,
-      using the JDK pinned in `libs.versions.toml`
+- [x] Add GitHub Actions workflow `.github/workflows/build.yml`: `./gradlew build` on push and PR,
+      using the JDK pinned in `libs.versions.toml` (hardcoded in the workflow YAML with a keep-in-sync
+      comment, since Actions' `setup-java` needs a literal value and can't read the Gradle catalog)
 - [ ] Verify `./gradlew build` succeeds on the empty multi-module skeleton before any real code lands
 
 ## P1 — Command manager core
