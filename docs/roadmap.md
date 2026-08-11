@@ -332,7 +332,7 @@ the rest are written, plus the index tying them together.
 - [x] `docs/annotations.md` — expand the P9 stub into a full page
 - [x] `docs/threading.md` (spec §4.1, §5.3)
 - [x] `docs/help-and-exceptions.md` — expand the P7 stub into a full page, add spec §7 content
-- [ ] `docs/limitations.md` — expand the P4 stub if any further limitations surfaced during P3
+- [x] `docs/limitations.md` — expand the P4 stub if any further limitations surfaced during P3
 - [ ] `docs/compatibility.md` — Java/Minestom/Cloud version table (spec §2), process note for keeping
       it updated on every version-catalog bump
 - [ ] `docs/decisions/0001-cloud-is-the-single-source-of-truth-for-parsing.md` (spec §5.4)
