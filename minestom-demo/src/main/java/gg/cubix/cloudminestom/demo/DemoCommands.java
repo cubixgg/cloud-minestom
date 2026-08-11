@@ -99,6 +99,21 @@ final class DemoCommands {
     }
 
     /**
+     * {@code /demo boom} - an intentionally-throwing command (spec.md §7/§13), demonstrating the
+     * default {@code cloud-minecraft-extras} exception feedback wired automatically by
+     * {@link MinestomCommandManager} (docs/roadmap.md P6) with no builder configuration needed.
+     *
+     * @param manager the manager to register against
+     */
+    static void registerBoom(final MinestomCommandManager<CommandSender> manager) {
+        manager.command(manager.commandBuilder("demo")
+                .literal("boom")
+                .handler(context -> {
+                    throw new IllegalStateException("kaboom");
+                }));
+    }
+
+    /**
      * Shared by both the builder-declared {@link #registerRoll} and the annotation-declared
      * {@code AnnotatedRollCommand}, so the two commands demonstrate parity of shape/suggestions
      * without duplicating the actual roll logic between them.
