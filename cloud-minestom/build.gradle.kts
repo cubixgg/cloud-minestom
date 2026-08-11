@@ -19,9 +19,14 @@ dependencies {
     testImplementation(platform(libs.junit.bom))
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.cloud.annotations)
+    testImplementation(libs.minestom.testing)
     testRuntimeOnly(libs.junit.platform.launcher)
 }
 
 tasks.test {
     useJUnitPlatform()
+
+    // net.minestom:testing's @EnvTest asserts on this flag (ConnectionManager#createPlayer) before
+    // it will let a virtual player connect outside a virtual thread; mirrors Minestom's own build.
+    jvmArgs("-Dminestom.inside-test=true")
 }

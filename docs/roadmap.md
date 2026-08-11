@@ -13,7 +13,7 @@ the `net.minestom:testing` integration harness from P2.
 
 - [x] P0 — Repository & build scaffolding
 - [x] P1 — Command manager core
-- [ ] P2 — Minimal end-to-end registration
+- [x] P2 — Minimal end-to-end registration
 - [ ] P3 — Native argument-tree translation
 - [ ] P4 — Flags (documented fallback)
 - [ ] P5 — Permissions
@@ -108,29 +108,29 @@ Gets one full round trip working — register, execute, suggest — before nativ
 (P3) adds complexity on top. Deliberately close in shape to the simplest possible bridge so the
 "why not just this" contrast in spec §1.1 is visible in the repo's own history.
 
-- [ ] `net.minestom:testing` added as a test dependency to `cloud-minestom`
-- [ ] `MinestomCommandManager.Builder#commandRegistrationCallback(Consumer<Command>)`: how built
+- [x] `net.minestom:testing` added as a test dependency to `cloud-minestom`
+- [x] `MinestomCommandManager.Builder#commandRegistrationCallback(Consumer<Command>)`: how built
       native commands reach the server; default `MinecraftServer.getCommandManager()::register`
-- [ ] `MinestomCommandRegistrationHandler<C>` implementing Cloud's `CommandRegistrationHandler<C>`:
+- [x] `MinestomCommandRegistrationHandler<C>` implementing Cloud's `CommandRegistrationHandler<C>`:
       for now, registers only the root literal (+ aliases) as a native `Command` with a default
       executor and a single trailing `ArgumentStringArray` syntax
-- [ ] Root/default executor and the fallback syntax both re-join their input and dispatch to
+- [x] Root/default executor and the fallback syntax both re-join their input and dispatch to
       `manager.commandExecutor().executeCommand(mappedSender, line)`
-- [ ] Wire `MinestomCommandRegistrationHandler` into `MinestomCommandManager`'s constructor, replacing
+- [x] Wire `MinestomCommandRegistrationHandler` into `MinestomCommandManager`'s constructor, replacing
       the P1 null-handler stub
-- [ ] `CloudSuggestionCallback`: strips Minestom's trailing-space placeholder character, calls
+- [x] `CloudSuggestionCallback`: strips Minestom's trailing-space placeholder character, calls
       `manager.suggestionFactory().suggestImmediately(mappedSender, input)`, fills the Minestom
       `Suggestion` with the results
-- [ ] Attach `CloudSuggestionCallback` to the fallback `ArgumentStringArray`
-- [ ] Unit test: registering a Cloud command against a fake registration sink produces exactly one
+- [x] Attach `CloudSuggestionCallback` to the fallback `ArgumentStringArray`
+- [x] Unit test: registering a Cloud command against a fake registration sink produces exactly one
       native `Command` with the expected name and aliases
-- [ ] Unit test: registering two syntaxes under the same root literal produces exactly one native
+- [x] Unit test: registering two syntaxes under the same root literal produces exactly one native
       `Command` (root de-duplication)
-- [ ] Unit test: suggestion callback matches a partially-typed argument
-- [ ] Unit test: suggestion callback returns everything after a trailing-space placeholder
-- [ ] Unit test: suggestion callback asks Cloud with the whole line including the root literal, not
+- [x] Unit test: suggestion callback matches a partially-typed argument
+- [x] Unit test: suggestion callback returns everything after a trailing-space placeholder
+- [x] Unit test: suggestion callback asks Cloud with the whole line including the root literal, not
       just the trailing text
-- [ ] First `@EnvTest`: register a Cloud command with a handler that sends a message, connect a
+- [x] First `@EnvTest`: register a Cloud command with a handler that sends a message, connect a
       virtual player, run the command, assert the player received the message
 
 ## P3 — Native argument-tree translation

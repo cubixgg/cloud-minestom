@@ -1,7 +1,11 @@
 package gg.cubix.cloudminestom;
 
+import gg.cubix.cloudminestom.registration.MinestomCommandRegistrationHandler;
 import java.util.Objects;
+import java.util.function.Consumer;
+import net.minestom.server.MinecraftServer;
 import net.minestom.server.command.CommandSender;
+import net.minestom.server.command.builder.Command;
 import org.incendo.cloud.CommandManager;
 import org.incendo.cloud.SenderMapper;
 import org.incendo.cloud.execution.ExecutionCoordinator;
@@ -15,9 +19,9 @@ import org.incendo.cloud.internal.CommandRegistrationHandler;
  * {@link CommandSender} for projects happy to use it directly, {@link #builder(SenderMapper)} lets a
  * project map onto its own sender/player type instead.
  *
- * <p>Registration is still {@link CommandRegistrationHandler#nullCommandRegistrationHandler()} at this
- * point - native command-tree translation lands in P2/P3. This class only carries the manager shape
- * and its construction paths.
+ * <p>Registration goes through {@link MinestomCommandRegistrationHandler}: every Cloud root command
+ * becomes one native Minestom {@link Command} (docs/spec.md §1.1/§5 - full argument-tree mirroring
+ * lands in P3, this is deliberately the flattened greedy-string bridge for now).
  */
 public final class MinestomCommandManager<C> extends CommandManager<C> {
 
@@ -25,10 +29,15 @@ public final class MinestomCommandManager<C> extends CommandManager<C> {
 
     private MinestomCommandManager(
             final SenderMapper<CommandSender, C> senderMapper,
-            final ExecutionCoordinator<C> executionCoordinator
+            final ExecutionCoordinator<C> executionCoordinator,
+            final Consumer<Command> commandRegistrationCallback
     ) {
         super(executionCoordinator, CommandRegistrationHandler.nullCommandRegistrationHandler());
         this.senderMapper = senderMapper;
+        // Can't hand `this` to the registration handler before `super(...)` returns, so it replaces
+        // the temporary null handler above via CommandManager's protected setter instead of being
+        // passed to the super() call directly.
+        this.commandRegistrationHandler(new MinestomCommandRegistrationHandler<>(this, commandRegistrationCallback));
     }
 
     /**
@@ -87,6 +96,11 @@ public final class MinestomCommandManager<C> extends CommandManager<C> {
 
         private final SenderMapper<CommandSender, C> senderMapper;
         private ExecutionCoordinator<C> executionCoordinator = ExecutionCoordinator.simpleCoordinator();
+        // Not a `MinecraftServer.getCommandManager()::register` method reference: that would resolve
+        // `getCommandManager()` eagerly at builder-construction time, forcing MinecraftServer to
+        // already be initialized even for consumers who override this callback (or construct the
+        // manager before MinecraftServer.init()). The lambda defers the lookup to first registration.
+        private Consumer<Command> commandRegistrationCallback = command -> MinecraftServer.getCommandManager().register(command);
 
         private Builder(final SenderMapper<CommandSender, C> senderMapper) {
             this.senderMapper = Objects.requireNonNull(senderMapper, "senderMapper");
@@ -106,12 +120,25 @@ public final class MinestomCommandManager<C> extends CommandManager<C> {
         }
 
         /**
+         * Sets how built native {@link Command}s reach the server. Defaults to
+         * {@code MinecraftServer.getCommandManager()::register}; override with a plain sink (e.g. a
+         * {@code List::add}) to make registration testable without a running server.
+         *
+         * @param commandRegistrationCallback the registration callback
+         * @return this builder
+         */
+        public Builder<C> commandRegistrationCallback(final Consumer<Command> commandRegistrationCallback) {
+            this.commandRegistrationCallback = Objects.requireNonNull(commandRegistrationCallback, "commandRegistrationCallback");
+            return this;
+        }
+
+        /**
          * Builds the manager.
          *
          * @return the built manager
          */
         public MinestomCommandManager<C> build() {
-            return new MinestomCommandManager<>(senderMapper, executionCoordinator);
+            return new MinestomCommandManager<>(senderMapper, executionCoordinator, commandRegistrationCallback);
         }
     }
 }
