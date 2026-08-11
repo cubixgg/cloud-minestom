@@ -63,10 +63,11 @@ Turns the current single-module scaffold into the multi-module layout from spec 
       `implementation(project(":cloud-minestom"))`, `implementation(libs.cloud.annotations)`.
       `application.mainClass` deliberately left unset until P11 adds the `Main` class it needs to
       point at.
-- [ ] Pick and record a license (MIT, matching Cloud's own license and the prior community ports);
-      add `LICENSE` at repo root
-- [ ] Add root `README.md`: what the project is, links to `spec.md`/`roadmap.md`/`docs/`, build badge
-      placeholder
+- [x] Pick and record a license (MIT, matching Cloud's own license and the prior community ports);
+      add `LICENSE` at repo root — already present from the GitHub repo's own initial commit,
+      merged into local history rather than recreated
+- [x] Add root `README.md`: what the project is, links to `spec.md`/`roadmap.md`/`docs/`, build badge
+      placeholder — landed with the rest of the project docs before this phase started
 - [ ] Add GitHub Actions workflow `.github/workflows/build.yml`: `./gradlew build` on push and PR,
       using the JDK pinned in `libs.versions.toml`
 - [ ] Verify `./gradlew build` succeeds on the empty multi-module skeleton before any real code lands
