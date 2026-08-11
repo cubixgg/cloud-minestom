@@ -300,14 +300,28 @@ in, not baked into the library's own default.
 
 ## 7. Exception handling & feedback
 
-`cloud-minecraft-extras`' `MinecraftExceptionHandler` is wired by default for the standard Cloud
-exceptions (`NoPermissionException`, `InvalidSyntaxException`, `ArgumentParseException`,
-`NoSuchCommandException`, `InvalidCommandSenderException`) because `CommandSender` already implements
-Adventure's `Audience` — no adapter needed, `MinecraftExceptionHandler` sends straight to the sender.
-Default component styling matches `cloud-minecraft-extras`' own defaults (red error text,
-MiniMessage-based). Fully overridable via `MinestomCommandManager.Builder#exceptionHandler(...)`,
-which is a thin convenience over Cloud's own `exceptionController()` — no new exception-handling
-concept is invented here.
+`cloud-minecraft-extras`' `MinecraftExceptionHandler` is wired by default because `CommandSender`
+already implements Adventure's `Audience` — no adapter needed, `MinecraftExceptionHandler` sends
+straight to the sender via the reverse direction of `SenderMapper`. Its own `defaultHandlers()`
+covers `InvalidSyntaxException`, `InvalidCommandSenderException`, `NoPermissionException`,
+`ArgumentParseException` and `CommandExecutionException` (an uncaught exception thrown inside a
+command handler; not part of the originally planned five, but registering `defaultHandlers()` and
+then leaving that one out would mean a handler bug fails silently for the sender).
+
+**Correction (found during P6 implementation):** this section originally listed
+`NoSuchCommandException` as one of `MinecraftExceptionHandler`'s covered types. It isn't -
+`MinecraftExceptionHandler` has no `defaultXxxHandler()` for it at all. cloud-core's own
+`CommandManager` separately registers a plain-caption (non-Adventure) handler for it via the
+protected `registerDefaultExceptionHandlers(...)`, which `MinestomCommandManager` doesn't call, to
+avoid two different exception-handling styles running side by side. Instead, a `NoSuchCommandException`
+handler is registered manually alongside `MinecraftExceptionHandler`'s output, using the same red
+Adventure-Component styling and Cloud's own `StandardCaptionKeys.EXCEPTION_NO_SUCH_COMMAND` caption
+(`"Unknown command."` by default - Cloud's own caption text for this one doesn't interpolate the
+supplied command name into the message, unlike e.g. invalid-syntax's `<syntax>` placeholder).
+
+Default component styling matches `cloud-minecraft-extras`' own defaults (red error text). Fully
+overridable via `MinestomCommandManager.Builder#exceptionHandler(...)`, which is a thin convenience
+over Cloud's own `exceptionController()` — no new exception-handling concept is invented here.
 
 ## 8. Help
 
