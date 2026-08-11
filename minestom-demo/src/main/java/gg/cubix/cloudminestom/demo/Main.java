@@ -40,6 +40,7 @@ public final class Main {
         DemoCommands.registerTarget(manager);
         DemoCommands.registerAnnounce(manager);
         DemoCommands.registerBoom(manager);
+        DemoCommands.registerHelp(manager);
 
         final AnnotationParser<CommandSender> annotations = new AnnotationParser<>(manager, CommandSender.class);
         annotations.parse(new AnnotatedRollCommand());

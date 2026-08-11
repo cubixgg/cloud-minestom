@@ -8,6 +8,7 @@ import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.command.CommandSender;
 import net.minestom.server.entity.Player;
+import org.incendo.cloud.minecraft.extras.MinecraftHelp;
 import org.incendo.cloud.parser.flag.CommandFlag;
 import org.incendo.cloud.parser.standard.IntegerParser;
 import org.incendo.cloud.parser.standard.StringParser;
@@ -111,6 +112,22 @@ final class DemoCommands {
                 .handler(context -> {
                     throw new IllegalStateException("kaboom");
                 }));
+    }
+
+    /**
+     * {@code /demo help [query]} - wired through {@link MinecraftHelp} (spec.md §8/§13), listing
+     * every command registered against {@code manager} so far - no bridging adapter needed, since
+     * Minestom's {@link CommandSender} already implements Adventure's {@code Audience}
+     * (docs/help-and-exceptions.md).
+     *
+     * @param manager the manager to register against
+     */
+    static void registerHelp(final MinestomCommandManager<CommandSender> manager) {
+        final MinecraftHelp<CommandSender> help = MinecraftHelp.create("/demo help", manager, sender -> sender);
+        manager.command(manager.commandBuilder("demo")
+                .literal("help")
+                .optional("query", StringParser.greedyStringParser())
+                .handler(context -> help.queryCommands(context.getOrDefault("query", ""), context.sender())));
     }
 
     /**
