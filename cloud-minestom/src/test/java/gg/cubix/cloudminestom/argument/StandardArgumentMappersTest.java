@@ -5,17 +5,21 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import gg.cubix.cloudminestom.parser.PlayerParser;
+import net.minestom.server.command.CommandSender;
 import net.minestom.server.command.builder.arguments.Argument;
 import net.minestom.server.command.builder.arguments.ArgumentBoolean;
 import net.minestom.server.command.builder.arguments.ArgumentString;
 import net.minestom.server.command.builder.arguments.ArgumentStringArray;
 import net.minestom.server.command.builder.arguments.ArgumentWord;
+import net.minestom.server.command.builder.arguments.minecraft.ArgumentEntity;
 import net.minestom.server.command.builder.arguments.minecraft.ArgumentTime;
 import net.minestom.server.command.builder.arguments.minecraft.ArgumentUUID;
 import net.minestom.server.command.builder.arguments.number.ArgumentDouble;
 import net.minestom.server.command.builder.arguments.number.ArgumentFloat;
 import net.minestom.server.command.builder.arguments.number.ArgumentInteger;
 import net.minestom.server.command.builder.arguments.number.ArgumentLong;
+import java.util.List;
 import org.incendo.cloud.component.CommandComponent;
 import org.incendo.cloud.parser.ParserDescriptor;
 import org.incendo.cloud.parser.standard.BooleanParser;
@@ -123,6 +127,15 @@ class StandardArgumentMappersTest {
         // (one number + a single d/s/t suffix). Native shape only - Cloud remains the real parser.
         final Argument<?> mapped = map("duration", DurationParser.durationParser());
         assertInstanceOf(ArgumentTime.class, mapped);
+    }
+
+    @Test
+    void playerParserMapsToASinglePlayerOnlyEntitySelector() {
+        final Argument<?> mapped = map("target", PlayerParser.<Object>playerParser(
+                sender -> (CommandSender) sender, List::of));
+        final ArgumentEntity argument = assertInstanceOf(ArgumentEntity.class, mapped);
+        assertTrue(argument.isOnlySingleEntity());
+        assertTrue(argument.isOnlyPlayers());
     }
 
     private <T> Argument<?> map(final String name, final ParserDescriptor<Object, T> parser) {

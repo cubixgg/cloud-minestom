@@ -19,7 +19,7 @@ the `net.minestom:testing` integration harness from P2.
 - [x] P5 — Permissions
 - [x] P6 — Exception handling & feedback
 - [x] P7 — Help
-- [ ] P8 — Custom parsers
+- [x] P8 — Custom parsers
 - [ ] P9 — Annotation commands
 - [ ] P10 — `cloud-minestom-bom`
 - [ ] P11 — `minestom-demo`
@@ -255,18 +255,29 @@ Spec §8.
 ## P8 — Custom parsers
 
 Spec §9. `PlayerParser` only for v1.0 — anything else is future roadmap, not a blocker (spec §9).
+**Extended during implementation**: spec §5.2's mapping table only ever listed the built-in Cloud
+parsers that already existed when P3 landed - it never had a row for a parser that didn't exist yet.
+`PlayerParser` has a sane, unambiguous native equivalent (`ArgumentEntity`, constrained to
+`singleEntity(true).onlyPlayers(true)`), so per `CLAUDE.md`'s non-negotiable "add a mapper, don't let it
+silently fall back" rule, an `ArgumentMapper` registration was added as its own item below and spec
+§5.2's table gained a row for it, rather than leaving `PlayerParser` components on the `Word`/`String`
+fallback shape.
 
-- [ ] `PlayerParser<C>` in `gg.cubix.cloudminestom.parser`: parses a currently-online player by exact
+- [x] `PlayerParser<C>` in `gg.cubix.cloudminestom.parser`: parses a currently-online player by exact
       name
-- [ ] `PlayerParser` suggestions: currently-online player names
-- [ ] `PlayerParser` selector support (`@s`/`@p`/`@a`/...) via Minestom's `ArgumentEntity` where the
+- [x] `PlayerParser` suggestions: currently-online player names
+- [x] `PlayerParser` selector support (`@s`/`@p`/`@a`/...) via Minestom's `ArgumentEntity` where the
       sender context allows resolution
-- [ ] Register `PlayerParser` with Cloud's `ParserRegistry` by default so a `Player`-typed
+- [x] Register `PlayerParser` with Cloud's `ParserRegistry` by default so a `Player`-typed
       `@Argument`-annotated parameter resolves it automatically (spec §10 parity)
-- [ ] Unit test: `PlayerParser` parses an exact online name, rejects an unknown/offline name with the
+- [x] Built-in mapper: `PlayerParser` → `Entity` (`singleEntity(true).onlyPlayers(true)`), plus the
+      matching spec §5.2 table row (see the correction note above)
+- [x] Unit test: `PlayerParser` parses an exact online name, rejects an unknown/offline name with the
       correct exception type
-- [ ] Unit test: `PlayerParser` suggestions list currently-online names only
-- [ ] `@EnvTest`: `PlayerParser` resolves and suggests correctly against real virtual players
+- [x] Unit test: `PlayerParser` suggestions list currently-online names only
+- [x] Unit test: `PlayerParser` maps to a single-player-only `Entity` argument (added alongside the
+      mapper item above, see the correction note)
+- [x] `@EnvTest`: `PlayerParser` resolves and suggests correctly against real virtual players
 
 ## P9 — Annotation commands
 
