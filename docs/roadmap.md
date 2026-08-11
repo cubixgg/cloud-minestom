@@ -324,7 +324,7 @@ Spec §13. One item per demo command so each is its own reviewable, checkoffable
 Spec §12. Some pages start as stubs earlier (P4, P7, P9) — this phase is where they're completed and
 the rest are written, plus the index tying them together.
 
-- [ ] `docs/getting-started.md`
+- [x] `docs/getting-started.md`
 - [ ] `docs/command-manager.md` (builder options, sender mapping, spec §4)
 - [ ] `docs/argument-mapping.md` — the full mapping table from spec §5.2, written to be kept in sync
       with `ArgumentMapperRegistry`'s actual registered set
