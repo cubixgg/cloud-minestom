@@ -195,9 +195,9 @@ Spec §5.5. A deliberate, honest limitation, not a gap to quietly leave open.
 
 - [x] Detect a flag-containing subtree during translation and degrade that subtree to the P2-style
       trailing greedy fallback instead of attempting a partial native mapping
-- [ ] Unit test: a command with a flag component produces a trailing greedy fallback node for that
+- [x] Unit test: a command with a flag component produces a trailing greedy fallback node for that
       subtree, and native nodes for everything before it
-- [ ] `@EnvTest`: a flagged command (presence flag and value flag) still executes and parses
+- [x] `@EnvTest`: a flagged command (presence flag and value flag) still executes and parses
       correctly end to end via the fallback path
 - [ ] `docs/limitations.md`: document the flag fallback behavior, referencing spec §5.5
 
