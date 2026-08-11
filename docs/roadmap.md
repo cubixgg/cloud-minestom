@@ -12,7 +12,7 @@ Every item that adds behavior needs the tests called out for it (or better, if n
 the `net.minestom:testing` integration harness from P2.
 
 - [x] P0 — Repository & build scaffolding
-- [ ] P1 — Command manager core
+- [x] P1 — Command manager core
 - [ ] P2 — Minimal end-to-end registration
 - [ ] P3 — Native argument-tree translation
 - [ ] P4 — Flags (documented fallback)
@@ -97,10 +97,10 @@ Spec §4. No registration or tree translation yet — just the manager shape and
 - [x] `MinestomCommandManager.create()` static convenience: `builder().build()` with `C = CommandSender`
 - [x] `hasPermission(C, String)` override: temporary stub returning `true` unconditionally (real
       implementation is P5 — do not build a half version here, land the whole default in one piece)
-- [ ] Unit test: `builder().build()` returns a non-null manager with the identity sender mapper
-- [ ] Unit test: a custom `SenderMapper<CommandSender, MyType>` round-trips correctly through
+- [x] Unit test: `builder().build()` returns a non-null manager with the identity sender mapper
+- [x] Unit test: a custom `SenderMapper<CommandSender, MyType>` round-trips correctly through
       `senderMapper()`
-- [ ] Unit test: `create()` and `builder().build()` (identity) produce equivalent managers
+- [x] Unit test: `create()` and `builder().build()` (identity) produce equivalent managers
 
 ## P2 — Minimal end-to-end registration
 
