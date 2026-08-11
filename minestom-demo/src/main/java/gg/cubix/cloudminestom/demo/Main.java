@@ -35,7 +35,8 @@ public final class Main {
         });
 
         final MinestomCommandManager<CommandSender> manager = MinestomCommandManager.create();
-        // Demo commands are registered here, one roadmap item (and commit) at a time - see
+        DemoCommands.registerRoll(manager);
+        // Further demo commands are registered here, one roadmap item (and commit) at a time - see
         // docs/roadmap.md P11.
 
         server.start("0.0.0.0", 25565);
