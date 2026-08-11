@@ -7,6 +7,7 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
+import org.incendo.cloud.annotations.AnnotationParser;
 
 /**
  * Boots a flat-world {@link MinecraftServer} and registers a {@link MinestomCommandManager} against it
@@ -36,6 +37,9 @@ public final class Main {
 
         final MinestomCommandManager<CommandSender> manager = MinestomCommandManager.create();
         DemoCommands.registerRoll(manager);
+
+        final AnnotationParser<CommandSender> annotations = new AnnotationParser<>(manager, CommandSender.class);
+        annotations.parse(new AnnotatedRollCommand());
         // Further demo commands are registered here, one roadmap item (and commit) at a time - see
         // docs/roadmap.md P11.
 

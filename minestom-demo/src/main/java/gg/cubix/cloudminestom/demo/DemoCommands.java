@@ -33,17 +33,27 @@ final class DemoCommands {
                         StringParser.stringParser(),
                         SuggestionProvider.suggestingStrings("normal", "advantage", "disadvantage")
                 )
-                .handler(context -> {
-                    final int sides = context.get("sides");
-                    final String modifier = context.getOrDefault("modifier", "normal");
-                    final int first = ThreadLocalRandom.current().nextInt(sides) + 1;
-                    final int result = switch (modifier) {
-                        case "advantage" -> Math.max(first, ThreadLocalRandom.current().nextInt(sides) + 1);
-                        case "disadvantage" -> Math.min(first, ThreadLocalRandom.current().nextInt(sides) + 1);
-                        default -> first;
-                    };
-                    context.sender().sendMessage(Component.text(
-                            "Rolled a d" + sides + " (" + modifier + "): " + result));
-                }));
+                .handler(context -> context.sender().sendMessage(
+                        rollMessage(context.get("sides"), context.getOrDefault("modifier", "normal")))));
+    }
+
+    /**
+     * Shared by both the builder-declared {@link #registerRoll} and the annotation-declared
+     * {@code AnnotatedRollCommand}, so the two commands demonstrate parity of shape/suggestions
+     * without duplicating the actual roll logic between them.
+     *
+     * @param sides    the die's side count
+     * @param modifier {@code "normal"}, {@code "advantage"} (best of two) or {@code "disadvantage"}
+     *                 (worst of two)
+     * @return the feedback message
+     */
+    static Component rollMessage(final int sides, final String modifier) {
+        final int first = ThreadLocalRandom.current().nextInt(sides) + 1;
+        final int result = switch (modifier) {
+            case "advantage" -> Math.max(first, ThreadLocalRandom.current().nextInt(sides) + 1);
+            case "disadvantage" -> Math.min(first, ThreadLocalRandom.current().nextInt(sides) + 1);
+            default -> first;
+        };
+        return Component.text("Rolled a d" + sides + " (" + modifier + "): " + result);
     }
 }
