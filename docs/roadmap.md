@@ -353,7 +353,7 @@ a guess.
       stub) for a given Cloud parser type
 - [x] `.claude/skills/` skill: verify a roadmap item's command round-trips through both the unit and
       `@EnvTest` layers before it gets checked off
-- [ ] `.claude/agents/` agent: review-oriented agent tuned to this repo's conventions from `CLAUDE.md`
+- [x] `.claude/agents/` agent: review-oriented agent tuned to this repo's conventions from `CLAUDE.md`
       (spec adherence, ADR triggers, both testing layers present)
 - [ ] Document the available skills/agents and when to use them in `CONTRIBUTING.md`
 
