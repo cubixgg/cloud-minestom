@@ -256,10 +256,10 @@ Spec §8.
 
 Spec §9. `PlayerParser` only for v1.0 — anything else is future roadmap, not a blocker (spec §9).
 
-- [ ] `PlayerParser<C>` in `gg.cubix.cloudminestom.parser`: parses a currently-online player by exact
+- [x] `PlayerParser<C>` in `gg.cubix.cloudminestom.parser`: parses a currently-online player by exact
       name
-- [ ] `PlayerParser` suggestions: currently-online player names
-- [ ] `PlayerParser` selector support (`@s`/`@p`/`@a`/...) via Minestom's `ArgumentEntity` where the
+- [x] `PlayerParser` suggestions: currently-online player names
+- [x] `PlayerParser` selector support (`@s`/`@p`/`@a`/...) via Minestom's `ArgumentEntity` where the
       sender context allows resolution
 - [ ] Register `PlayerParser` with Cloud's `ParserRegistry` by default so a `Player`-typed
       `@Argument`-annotated parameter resolves it automatically (spec §10 parity)
