@@ -22,7 +22,7 @@ the `net.minestom:testing` integration harness from P2.
 - [x] P8 — Custom parsers
 - [x] P9 — Annotation commands
 - [x] P10 — `cloud-minestom-bom`
-- [ ] P11 — `minestom-demo`
+- [x] P11 — `minestom-demo`
 - [ ] P12 — Documentation
 - [ ] P13 — Claude Code tooling
 - [ ] P14 — Release & CI hardening
@@ -317,7 +317,7 @@ Spec §13. One item per demo command so each is its own reviewable, checkoffable
 - [x] Demo command: an intentionally-throwing command demonstrating default exception feedback
 - [x] Demo command: `/demo help` wired through `MinecraftHelp`
 - [x] Demo command: a permission-gated command demonstrating the default permission function
-- [ ] `minestom-demo/README.md`: how to run the demo server and what each command demonstrates
+- [x] `minestom-demo/README.md`: how to run the demo server and what each command demonstrates
 
 ## P12 — Documentation
 
