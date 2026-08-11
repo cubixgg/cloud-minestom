@@ -131,6 +131,26 @@ final class DemoCommands {
     }
 
     /**
+     * {@code /demo admin} - a permission-gated command demonstrating the default permission function
+     * (spec.md §6/§13). {@code manager} is built with every builder default, including the default
+     * {@code permissionFunction} - always allowed, since the pinned Minestom version has no native
+     * permission-node system to check a {@code .permission(...)} node against (spec.md §6's
+     * correction note, docs/roadmap.md P5). This command succeeds for every sender, honestly
+     * demonstrating that default rather than pretending it's a real gate; a project that needs one
+     * supplies its own {@code permissionFunction} (e.g. LuckPerms, a permission-level check) via
+     * {@link MinestomCommandManager.Builder#permissionFunction}.
+     *
+     * @param manager the manager to register against
+     */
+    static void registerAdmin(final MinestomCommandManager<CommandSender> manager) {
+        manager.command(manager.commandBuilder("demo")
+                .literal("admin")
+                .permission("cloud-minestom.demo.admin")
+                .handler(context -> context.sender().sendMessage(Component.text(
+                        "Granted - the default permission function never denies (spec.md §6)."))));
+    }
+
+    /**
      * Shared by both the builder-declared {@link #registerRoll} and the annotation-declared
      * {@code AnnotatedRollCommand}, so the two commands demonstrate parity of shape/suggestions
      * without duplicating the actual roll logic between them.

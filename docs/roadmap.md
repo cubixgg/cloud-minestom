@@ -316,7 +316,7 @@ Spec §13. One item per demo command so each is its own reviewable, checkoffable
 - [x] Demo command: a flagged command that demonstrates and comments on the P4 fallback behavior
 - [x] Demo command: an intentionally-throwing command demonstrating default exception feedback
 - [x] Demo command: `/demo help` wired through `MinecraftHelp`
-- [ ] Demo command: a permission-gated command demonstrating the default permission function
+- [x] Demo command: a permission-gated command demonstrating the default permission function
 - [ ] `minestom-demo/README.md`: how to run the demo server and what each command demonstrates
 
 ## P12 — Documentation
