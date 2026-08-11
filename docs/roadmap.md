@@ -313,7 +313,7 @@ Spec §13. One item per demo command so each is its own reviewable, checkoffable
 - [x] Demo command: the same command shape re-declared via `@Command` annotations, to show parity
       between styles side by side
 - [x] Demo command: `PlayerParser`-based "target a player" command
-- [ ] Demo command: a flagged command that demonstrates and comments on the P4 fallback behavior
+- [x] Demo command: a flagged command that demonstrates and comments on the P4 fallback behavior
 - [ ] Demo command: an intentionally-throwing command demonstrating default exception feedback
 - [ ] Demo command: `/demo help` wired through `MinecraftHelp`
 - [ ] Demo command: a permission-gated command demonstrating the default permission function

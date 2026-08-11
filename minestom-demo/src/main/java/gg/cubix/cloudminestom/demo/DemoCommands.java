@@ -2,11 +2,13 @@ package gg.cubix.cloudminestom.demo;
 
 import gg.cubix.cloudminestom.MinestomCommandManager;
 import gg.cubix.cloudminestom.parser.PlayerParser;
+import java.util.Locale;
 import java.util.concurrent.ThreadLocalRandom;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.command.CommandSender;
 import net.minestom.server.entity.Player;
+import org.incendo.cloud.parser.flag.CommandFlag;
 import org.incendo.cloud.parser.standard.IntegerParser;
 import org.incendo.cloud.parser.standard.StringParser;
 import org.incendo.cloud.suggestion.SuggestionProvider;
@@ -64,6 +66,36 @@ final class DemoCommands {
 
     private static String senderName(final CommandSender sender) {
         return sender instanceof Player player ? player.getUsername() : "the console";
+    }
+
+    /**
+     * {@code /demo announce <message> [--loud] [--repeat <count>]} - a flagged command (spec.md
+     * §5.5/§13). Everything before the flag subtree ({@code message}) still gets full native
+     * argument-tree mirroring; the flag subtree itself degrades to the documented trailing-greedy
+     * fallback (docs/roadmap.md P4) - the client sees one grey "it's a string" field covering
+     * {@code --loud --repeat 3} rather than individually validated sub-arguments, but Cloud still
+     * parses the flags correctly, exactly as it would on any other Cloud platform
+     * (docs/limitations.md).
+     *
+     * @param manager the manager to register against
+     */
+    static void registerAnnounce(final MinestomCommandManager<CommandSender> manager) {
+        manager.command(manager.commandBuilder("demo")
+                .literal("announce")
+                .required("message", StringParser.stringParser())
+                .flag(CommandFlag.<CommandSender>builder("loud").build())
+                .flag(CommandFlag.<CommandSender>builder("repeat").withComponent(IntegerParser.integerParser(1, 5)).build())
+                .handler(context -> {
+                    final String message = context.<String>get("message");
+                    final boolean loud = context.flags().isPresent("loud");
+                    final Integer repeatFlag = context.flags().get("repeat");
+                    final int repeat = repeatFlag == null ? 1 : repeatFlag;
+
+                    final Component announcement = Component.text(loud ? message.toUpperCase(Locale.ROOT) + "!" : message);
+                    for (int i = 0; i < repeat; i++) {
+                        context.sender().sendMessage(announcement);
+                    }
+                }));
     }
 
     /**

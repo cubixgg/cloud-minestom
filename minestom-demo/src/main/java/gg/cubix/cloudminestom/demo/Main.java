@@ -38,6 +38,7 @@ public final class Main {
         final MinestomCommandManager<CommandSender> manager = MinestomCommandManager.create();
         DemoCommands.registerRoll(manager);
         DemoCommands.registerTarget(manager);
+        DemoCommands.registerAnnounce(manager);
 
         final AnnotationParser<CommandSender> annotations = new AnnotationParser<>(manager, CommandSender.class);
         annotations.parse(new AnnotatedRollCommand());
