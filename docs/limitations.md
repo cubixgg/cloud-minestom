@@ -1,5 +1,12 @@
 # Known limitations
 
+Deliberate, documented boundaries of the native-mirroring approach (spec.md §5) - not partial
+implementations of a described feature, and not gaps a later roadmap phase is expected to close. Two
+surfaced during implementation: the flag fallback (P4) and a Minestom-native argument-ID collision
+found while building `minestom-demo` (P11). The `DurationParser`/`Time` grammar mismatch is the other
+documented one; see [`argument-mapping.md`](./argument-mapping.md#known-mismatches) for it, since it's
+about one specific mapping rather than a structural boundary like the two below.
+
 ## Flags degrade to a single greedy argument
 
 Cloud flags (`--name value`, presence flags like `--verbose`, `-abc` short-flag aliasing) have no

@@ -23,7 +23,7 @@ the `net.minestom:testing` integration harness from P2.
 - [x] P9 — Annotation commands
 - [x] P10 — `cloud-minestom-bom`
 - [x] P11 — `minestom-demo`
-- [ ] P12 — Documentation
+- [x] P12 — Documentation
 - [ ] P13 — Claude Code tooling
 - [ ] P14 — Release & CI hardening
 
@@ -324,25 +324,25 @@ Spec §13. One item per demo command so each is its own reviewable, checkoffable
 Spec §12. Some pages start as stubs earlier (P4, P7, P9) — this phase is where they're completed and
 the rest are written, plus the index tying them together.
 
-- [ ] `docs/getting-started.md`
-- [ ] `docs/command-manager.md` (builder options, sender mapping, spec §4)
-- [ ] `docs/argument-mapping.md` — the full mapping table from spec §5.2, written to be kept in sync
+- [x] `docs/getting-started.md`
+- [x] `docs/command-manager.md` (builder options, sender mapping, spec §4)
+- [x] `docs/argument-mapping.md` — the full mapping table from spec §5.2, written to be kept in sync
       with `ArgumentMapperRegistry`'s actual registered set
-- [ ] `docs/permissions.md` (spec §6)
-- [ ] `docs/annotations.md` — expand the P9 stub into a full page
-- [ ] `docs/threading.md` (spec §4.1, §5.3)
-- [ ] `docs/help-and-exceptions.md` — expand the P7 stub into a full page, add spec §7 content
-- [ ] `docs/limitations.md` — expand the P4 stub if any further limitations surfaced during P3
-- [ ] `docs/compatibility.md` — Java/Minestom/Cloud version table (spec §2), process note for keeping
+- [x] `docs/permissions.md` (spec §6)
+- [x] `docs/annotations.md` — expand the P9 stub into a full page
+- [x] `docs/threading.md` (spec §4.1, §5.3)
+- [x] `docs/help-and-exceptions.md` — expand the P7 stub into a full page, add spec §7 content
+- [x] `docs/limitations.md` — expand the P4 stub if any further limitations surfaced during P3
+- [x] `docs/compatibility.md` — Java/Minestom/Cloud version table (spec §2), process note for keeping
       it updated on every version-catalog bump
-- [ ] `docs/decisions/0001-cloud-is-the-single-source-of-truth-for-parsing.md` (spec §5.4)
-- [ ] `docs/decisions/0002-simple-execution-coordinator-by-default.md` (spec §4.1)
-- [ ] `docs/decisions/0003-no-separate-annotations-or-extras-module.md` (spec §3)
+- [x] `docs/decisions/0001-cloud-is-the-single-source-of-truth-for-parsing.md` (spec §5.4)
+- [x] `docs/decisions/0002-simple-execution-coordinator-by-default.md` (spec §4.1)
+- [x] `docs/decisions/0003-no-separate-annotations-or-extras-module.md` (spec §3)
 - [x] `docs/decisions/0004-gradle-version-catalog-for-dependency-management.md` (spec §2) — written
       ahead of the rest of this phase since the decision was already made and needed recording
 - [x] `docs/decisions/0005-ai-assisted-development-with-claude-code.md` — same as above, project-process
       decision recorded as soon as it applied rather than deferred to this phase
-- [ ] `docs/README.md` index page linking all of the above
+- [x] `docs/README.md` index page linking all of the above
 
 ## P13 — Claude Code tooling
 
