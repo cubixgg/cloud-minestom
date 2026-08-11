@@ -4,6 +4,7 @@ import gg.cubix.cloudminestom.argument.ArgumentMapper;
 import gg.cubix.cloudminestom.argument.ArgumentMapperRegistry;
 import gg.cubix.cloudminestom.registration.MinestomCommandRegistrationHandler;
 import java.util.Objects;
+import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.command.CommandSender;
@@ -28,15 +29,18 @@ import org.incendo.cloud.internal.CommandRegistrationHandler;
 public final class MinestomCommandManager<C> extends CommandManager<C> {
 
     private final SenderMapper<CommandSender, C> senderMapper;
+    private final BiPredicate<C, String> permissionFunction;
 
     private MinestomCommandManager(
             final SenderMapper<CommandSender, C> senderMapper,
             final ExecutionCoordinator<C> executionCoordinator,
             final Consumer<Command> commandRegistrationCallback,
-            final ArgumentMapperRegistry argumentMapperRegistry
+            final ArgumentMapperRegistry argumentMapperRegistry,
+            final BiPredicate<C, String> permissionFunction
     ) {
         super(executionCoordinator, CommandRegistrationHandler.nullCommandRegistrationHandler());
         this.senderMapper = senderMapper;
+        this.permissionFunction = permissionFunction;
         // Can't hand `this` to the registration handler before `super(...)` returns, so it replaces
         // the temporary null handler above via CommandManager's protected setter instead of being
         // passed to the super() call directly.
@@ -87,9 +91,7 @@ public final class MinestomCommandManager<C> extends CommandManager<C> {
 
     @Override
     public boolean hasPermission(final C sender, final String permission) {
-        // Temporary stub. The real default - and the pluggable permission function it comes from -
-        // lands whole in P5 (docs/spec.md §6); no half version here in the meantime.
-        return true;
+        return this.permissionFunction.test(sender, permission);
     }
 
     /**
@@ -107,6 +109,12 @@ public final class MinestomCommandManager<C> extends CommandManager<C> {
         // manager before MinecraftServer.init()). The lambda defers the lookup to first registration.
         private Consumer<Command> commandRegistrationCallback = command -> MinecraftServer.getCommandManager().register(command);
         private ArgumentMapperRegistry argumentMapperRegistry = ArgumentMapperRegistry.createDefault();
+        // Always allowed: the pinned Minestom version has no native permission-node system to check
+        // against (no Permission/PermissionHandler/Player#hasPermission - see spec.md §6's
+        // correction note), only a numeric Player#getPermissionLevel() unrelated in shape to Cloud's
+        // arbitrary String-keyed model. Projects with a real permission system (LuckPerms, an auth
+        // service, a permissionLevel-based check) replace this wholesale.
+        private BiPredicate<C, String> permissionFunction = (sender, permission) -> true;
 
         private Builder(final SenderMapper<CommandSender, C> senderMapper) {
             this.senderMapper = Objects.requireNonNull(senderMapper, "senderMapper");
@@ -168,12 +176,28 @@ public final class MinestomCommandManager<C> extends CommandManager<C> {
         }
 
         /**
+         * Replaces the permission function backing {@link MinestomCommandManager#hasPermission}.
+         * Defaults to always-allowed for every sender and permission string - see docs/spec.md §6's
+         * correction note for why that, not a Minestom-native permission-node check, is the sane
+         * default on this platform.
+         *
+         * @param permissionFunction the replacement permission function
+         * @return this builder
+         */
+        public Builder<C> permissionFunction(final BiPredicate<C, String> permissionFunction) {
+            this.permissionFunction = Objects.requireNonNull(permissionFunction, "permissionFunction");
+            return this;
+        }
+
+        /**
          * Builds the manager.
          *
          * @return the built manager
          */
         public MinestomCommandManager<C> build() {
-            return new MinestomCommandManager<>(senderMapper, executionCoordinator, commandRegistrationCallback, argumentMapperRegistry);
+            return new MinestomCommandManager<>(
+                    senderMapper, executionCoordinator, commandRegistrationCallback, argumentMapperRegistry, permissionFunction
+            );
         }
     }
 }
