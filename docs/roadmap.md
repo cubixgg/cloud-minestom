@@ -109,14 +109,14 @@ Gets one full round trip working — register, execute, suggest — before nativ
 "why not just this" contrast in spec §1.1 is visible in the repo's own history.
 
 - [x] `net.minestom:testing` added as a test dependency to `cloud-minestom`
-- [ ] `MinestomCommandManager.Builder#commandRegistrationCallback(Consumer<Command>)`: how built
+- [x] `MinestomCommandManager.Builder#commandRegistrationCallback(Consumer<Command>)`: how built
       native commands reach the server; default `MinecraftServer.getCommandManager()::register`
-- [ ] `MinestomCommandRegistrationHandler<C>` implementing Cloud's `CommandRegistrationHandler<C>`:
+- [x] `MinestomCommandRegistrationHandler<C>` implementing Cloud's `CommandRegistrationHandler<C>`:
       for now, registers only the root literal (+ aliases) as a native `Command` with a default
       executor and a single trailing `ArgumentStringArray` syntax
-- [ ] Root/default executor and the fallback syntax both re-join their input and dispatch to
+- [x] Root/default executor and the fallback syntax both re-join their input and dispatch to
       `manager.commandExecutor().executeCommand(mappedSender, line)`
-- [ ] Wire `MinestomCommandRegistrationHandler` into `MinestomCommandManager`'s constructor, replacing
+- [x] Wire `MinestomCommandRegistrationHandler` into `MinestomCommandManager`'s constructor, replacing
       the P1 null-handler stub
 - [ ] `CloudSuggestionCallback`: strips Minestom's trailing-space placeholder character, calls
       `manager.suggestionFactory().suggestImmediately(mappedSender, input)`, fills the Minestom
