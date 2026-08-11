@@ -91,6 +91,15 @@ final class CommandTreeTranslator {
             final boolean isLastInChain,
             final ArgumentMapperRegistry registry
     ) {
+        if (component.type() == CommandComponent.ComponentType.FLAG) {
+            // Flags (--name value, presence flags, -abc aliasing) have no Minestom-native node type
+            // (spec.md §5.5, known limitation): the whole flag subtree degrades to a single trailing
+            // greedy argument, the same shape P2 used for an entire command before native mapping
+            // existed. Flags are always the tail of a command (Cloud collects them into one
+            // component, appended after every other argument), so there is nothing to recurse into.
+            return List.of(ArgumentType.StringArray(component.name()));
+        }
+
         final List<Argument<?>> variants = new ArrayList<>();
         if (component.type() == CommandComponent.ComponentType.LITERAL) {
             for (final String name : component.aliases()) {

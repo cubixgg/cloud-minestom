@@ -193,7 +193,7 @@ P2/spec §1.1. Each row of spec §5.2's table is its own item.
 
 Spec §5.5. A deliberate, honest limitation, not a gap to quietly leave open.
 
-- [ ] Detect a flag-containing subtree during translation and degrade that subtree to the P2-style
+- [x] Detect a flag-containing subtree during translation and degrade that subtree to the P2-style
       trailing greedy fallback instead of attempting a partial native mapping
 - [ ] Unit test: a command with a flag component produces a trailing greedy fallback node for that
       subtree, and native nodes for everything before it
