@@ -64,7 +64,7 @@ its own, can adopt it through the `SenderMapper` seam described in [§4](#4-comm
 
 ## 2. Target audience & compatibility
 
-- **Java:** 21 minimum (Minestom's own floor). Built against the same JDK Minestom itself targets;
+- **Java:** 25 minimum (Minestom's own floor). Built against the same JDK Minestom itself targets;
   bumped when Minestom bumps.
 - **Minestom:** tracks current Minestom releases. No LTS promise — Minestom itself doesn't have one.
   A compatibility table lives in `docs/compatibility.md` and is updated every time the pinned Minestom

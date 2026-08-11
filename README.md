@@ -66,7 +66,7 @@ help, and the same commands declared again via annotations.
 
 ## Development
 
-Requirements: JDK 21 (see `gradle/libs.versions.toml` for the exact pinned toolchain version). All
+Requirements: JDK 25 (see `gradle/libs.versions.toml` for the exact pinned toolchain version). All
 dependency versions — Minestom, Cloud, JUnit — are managed centrally through the
 [Gradle version catalog](https://docs.gradle.org/current/userguide/platforms.html) at
 `gradle/libs.versions.toml`; nothing is version-pinned inline in a module's `build.gradle.kts`.

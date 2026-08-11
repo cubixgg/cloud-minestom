@@ -11,7 +11,7 @@ Every item that adds behavior needs the tests called out for it (or better, if n
 "Unit Tests sind auch wichtig" is not optional per project scope. Items phrased as `@EnvTest` require
 the `net.minestom:testing` integration harness from P2.
 
-- [ ] P0 — Repository & build scaffolding
+- [x] P0 — Repository & build scaffolding
 - [ ] P1 — Command manager core
 - [ ] P2 — Minimal end-to-end registration
 - [ ] P3 — Native argument-tree translation
@@ -33,32 +33,53 @@ the `net.minestom:testing` integration harness from P2.
 
 Turns the current single-module scaffold into the multi-module layout from spec §3.
 
-- [ ] Add `gradle/libs.versions.toml` with pinned versions: `java` (21), `minestom`, `cloud` (2.1.0),
-      `cloud-minecraft` (2.0.0, covers `cloud-minecraft-extras` + `cloud-annotations`), `adventure`,
-      `junit`, `slf4j`
-- [ ] Convert root `build.gradle.kts` into a parent build: remove the `java` plugin and dependency
-      block, keep only `allprojects`/`subprojects` shared config (group, repositories, Java toolchain)
-- [ ] Delete the placeholder root `src/main/java`, `src/main/resources`, `src/test/java`,
-      `src/test/resources` directories (they belong to the old single-module scaffold, not the parent
-      build)
-- [ ] Update `settings.gradle.kts` to include `cloud-minestom`, `cloud-minestom-bom`, `minestom-demo`
-- [ ] Create `cloud-minestom/build.gradle.kts`: `java-library` plugin, `api(libs.cloud.core)`,
+- [x] Add `gradle/libs.versions.toml` with pinned versions: `java` (25 — the pinned Minestom version
+      below turned out to require it; see the correction noted under item 12), `minestom`
+      (2026.08.07-26.2), `cloud` (2.1.0 — covers `cloud-core` **and** `cloud-annotations`, both
+      published from the same `Incendo/cloud` monorepo tag), `cloud-minecraft` (2.0.0 —
+      `cloud-minecraft-extras`, published separately from `Incendo/cloud-minecraft` and currently
+      trailing `cloud`'s version), `adventure` (5.2.0, matching what the pinned Minestom version itself
+      ships), `junit` (6.1.2), `slf4j` (2.0.18). Corrects a mislabeling in the original item text, which
+      grouped `cloud-annotations` under the `cloud-minecraft` pin — verified against both repos' actual
+      tags before writing the catalog.
+- [x] Convert root `build.gradle.kts` into a parent build: remove the `java` plugin and dependency
+      block, keep only `subprojects` shared config (group, repositories, Java toolchain via the
+      version catalog). The toolchain config only fires for subprojects that apply a `java`-family
+      plugin (`plugins.withType<JavaBasePlugin>`), so it safely skips `cloud-minestom-bom`'s
+      `java-platform` plugin, which cannot coexist with `java`/`java-library`.
+- [x] Delete the placeholder root `src/main/java`, `src/main/resources`, `src/test/java`,
+      `src/test/resources` directories — already gone (they were always empty and Git never tracked
+      them), nothing to delete
+- [x] Update `settings.gradle.kts` to include `cloud-minestom`, `cloud-minestom-bom`, `minestom-demo`
+- [x] Create `cloud-minestom/build.gradle.kts`: `java-library` plugin, `api(libs.cloud.core)`,
       `api(libs.minestom)`, `api(libs.cloud.minecraft.extras)`, `compileOnly(libs.cloud.annotations)`
       (spec §10 — optional for consumers who don't use annotations), `implementation(libs.slf4j.api)`,
-      JUnit test deps
-- [ ] Create `cloud-minestom/src/main/java/gg/cubix/cloudminestom` package root with a placeholder
-      compile-anchor class (mirrors the convention of documenting module scope in one landing class)
-- [ ] Create `cloud-minestom-bom/build.gradle.kts`: `java-platform` plugin, empty constraints block
+      JUnit test deps (also `testImplementation(libs.cloud.annotations)`, needed by later
+      annotation-related tests in P9)
+- [x] Create `cloud-minestom/src/main/java/gg/cubix/cloudminestom` package root with a placeholder
+      compile-anchor class (mirrors the convention of documenting module scope in one landing class):
+      `CloudMinestom`
+- [x] Create `cloud-minestom-bom/build.gradle.kts`: `java-platform` plugin, empty constraints block
       (filled in P10)
-- [ ] Create `minestom-demo/build.gradle.kts`: `application` plugin,
-      `implementation(project(":cloud-minestom"))`, `implementation(libs.cloud.annotations)`
-- [ ] Pick and record a license (MIT, matching Cloud's own license and the prior community ports);
-      add `LICENSE` at repo root
-- [ ] Add root `README.md`: what the project is, links to `spec.md`/`roadmap.md`/`docs/`, build badge
-      placeholder
-- [ ] Add GitHub Actions workflow `.github/workflows/build.yml`: `./gradlew build` on push and PR,
-      using the JDK pinned in `libs.versions.toml`
-- [ ] Verify `./gradlew build` succeeds on the empty multi-module skeleton before any real code lands
+- [x] Create `minestom-demo/build.gradle.kts`: `application` plugin,
+      `implementation(project(":cloud-minestom"))`, `implementation(libs.cloud.annotations)`.
+      `application.mainClass` deliberately left unset until P11 adds the `Main` class it needs to
+      point at.
+- [x] Pick and record a license (MIT, matching Cloud's own license and the prior community ports);
+      add `LICENSE` at repo root — already present from the GitHub repo's own initial commit,
+      merged into local history rather than recreated
+- [x] Add root `README.md`: what the project is, links to `spec.md`/`roadmap.md`/`docs/`, build badge
+      placeholder — landed with the rest of the project docs before this phase started
+- [x] Add GitHub Actions workflow `.github/workflows/build.yml`: `./gradlew build` on push and PR,
+      using the JDK pinned in `libs.versions.toml` (hardcoded in the workflow YAML with a keep-in-sync
+      comment, since Actions' `setup-java` needs a literal value and can't read the Gradle catalog)
+- [x] Verify `./gradlew build` succeeds on the empty multi-module skeleton before any real code lands.
+      First attempt failed: `net.minestom:minestom:2026.08.07-26.2` is compiled for JVM 25, not 21 as
+      `spec.md` §2 originally (incorrectly) claimed as Minestom's floor - a stale assumption, not
+      something actually verified against the pinned artifact when spec.md was written. Corrected the
+      `java` catalog entry to 25 and every doc that repeated the wrong number
+      (`spec.md`, `CLAUDE.md`, `CONTRIBUTING.md`, `README.md`, `.github/workflows/build.yml`) in the
+      same commit; build passes clean after the fix.
 
 ## P1 — Command manager core
 
