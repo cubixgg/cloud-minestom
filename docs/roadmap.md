@@ -283,7 +283,7 @@ fallback shape.
 
 Spec §10. No dedicated module — `cloud-annotations` used directly.
 
-- [ ] `docs/annotations.md` getting-started snippet: constructing `AnnotationParser<C>` against
+- [x] `docs/annotations.md` getting-started snippet: constructing `AnnotationParser<C>` against
       `MinestomCommandManager<C>`
 - [ ] `@EnvTest`: an `@Command`-annotated method registers and executes correctly through the same
       manager as a builder-declared command
