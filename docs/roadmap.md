@@ -285,7 +285,7 @@ Spec §10. No dedicated module — `cloud-annotations` used directly.
 
 - [x] `docs/annotations.md` getting-started snippet: constructing `AnnotationParser<C>` against
       `MinestomCommandManager<C>`
-- [ ] `@EnvTest`: an `@Command`-annotated method registers and executes correctly through the same
+- [x] `@EnvTest`: an `@Command`-annotated method registers and executes correctly through the same
       manager as a builder-declared command
 - [ ] `@EnvTest`: `@Permission` on an annotated command is enforced through the P5 permission function
 - [ ] `@EnvTest`: `@Suggestions`-provided suggestions surface correctly through the P3 suggestion
