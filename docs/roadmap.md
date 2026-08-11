@@ -16,7 +16,7 @@ the `net.minestom:testing` integration harness from P2.
 - [x] P2 — Minimal end-to-end registration
 - [x] P3 — Native argument-tree translation
 - [x] P4 — Flags (documented fallback)
-- [ ] P5 — Permissions
+- [x] P5 — Permissions
 - [ ] P6 — Exception handling & feedback
 - [ ] P7 — Help
 - [ ] P8 — Custom parsers
@@ -215,11 +215,11 @@ original wording.
       the honest default for a platform with no native permission system to check against, not a
       placeholder (spec §6)
 - [x] Wire `hasPermission(C, String)` to the configured function, replacing the P1 stub
-- [ ] Unit test: default function allows an empty permission string
-- [ ] Unit test: default function allows a non-empty permission string too (there is no native
+- [x] Unit test: default function allows an empty permission string
+- [x] Unit test: default function allows a non-empty permission string too (there is no native
       concept to gate it against)
-- [ ] Unit test: a consumer-supplied custom permission function fully replaces the default
-- [ ] `@EnvTest`: a permission-gated command (via a consumer-supplied permission function, since the
+- [x] Unit test: a consumer-supplied custom permission function fully replaces the default
+- [x] `@EnvTest`: a permission-gated command (via a consumer-supplied permission function, since the
       default never denies) is both hidden from a lacking player's tab-completion and rejected on
       execution, and works normally for a player holding the node
 
