@@ -351,7 +351,7 @@ a guess.
 
 - [x] `.claude/skills/` skill: scaffold a new `ArgumentMapper` (class + registry wiring + unit test
       stub) for a given Cloud parser type
-- [ ] `.claude/skills/` skill: verify a roadmap item's command round-trips through both the unit and
+- [x] `.claude/skills/` skill: verify a roadmap item's command round-trips through both the unit and
       `@EnvTest` layers before it gets checked off
 - [ ] `.claude/agents/` agent: review-oriented agent tuned to this repo's conventions from `CLAUDE.md`
       (spec adherence, ADR triggers, both testing layers present)
