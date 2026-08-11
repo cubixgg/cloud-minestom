@@ -24,7 +24,7 @@ the `net.minestom:testing` integration harness from P2.
 - [x] P10 — `cloud-minestom-bom`
 - [x] P11 — `minestom-demo`
 - [x] P12 — Documentation
-- [ ] P13 — Claude Code tooling
+- [x] P13 — Claude Code tooling
 - [ ] P14 — Release & CI hardening
 
 ---
@@ -349,13 +349,13 @@ the rest are written, plus the index tying them together.
 Spec §14. Deferred until the library's real shape exists so the tooling is built against reality, not
 a guess.
 
-- [ ] `.claude/skills/` skill: scaffold a new `ArgumentMapper` (class + registry wiring + unit test
+- [x] `.claude/skills/` skill: scaffold a new `ArgumentMapper` (class + registry wiring + unit test
       stub) for a given Cloud parser type
-- [ ] `.claude/skills/` skill: verify a roadmap item's command round-trips through both the unit and
+- [x] `.claude/skills/` skill: verify a roadmap item's command round-trips through both the unit and
       `@EnvTest` layers before it gets checked off
-- [ ] `.claude/agents/` agent: review-oriented agent tuned to this repo's conventions from `CLAUDE.md`
+- [x] `.claude/agents/` agent: review-oriented agent tuned to this repo's conventions from `CLAUDE.md`
       (spec adherence, ADR triggers, both testing layers present)
-- [ ] Document the available skills/agents and when to use them in `CONTRIBUTING.md`
+- [x] Document the available skills/agents and when to use them in `CONTRIBUTING.md`
 
 ## P14 — Release & CI hardening
 

@@ -108,7 +108,18 @@ Full detail and rationale in `CLAUDE.md` and `spec.md`; the short version:
 
 ## Claude Code tooling
 
-`.claude/skills/` and `.claude/agents/` (once built - see `roadmap.md` P13) exist to make working in
-this repo faster and more consistent: scaffolding a new `ArgumentMapper`, verifying a roadmap item
-round-trips through both testing layers before it's checked off, and a review agent tuned to the rules
-above. Use them where they apply instead of re-deriving the same steps by hand.
+`.claude/skills/` and `.claude/agents/` exist to make working in this repo faster and more consistent
+than re-deriving the same steps by hand every time. Use them where they apply:
+
+- **`scaffold-argument-mapper` skill** — reach for this when adding a new row to the argument-mapping
+  table (`docs/spec.md` §5.2): a new built-in `ArgumentMapper` method in `StandardArgumentMappers`, its
+  registration, a unit test stub, and the `docs/argument-mapping.md`/`docs/spec.md` §5.2 updates that
+  need to land alongside it.
+- **`verify-roadmap-item` skill** — run through this before checking a `docs/roadmap.md` box: which
+  testing layer(s) the item actually needs, what an `@EnvTest` should assert on (real packet content,
+  not just "didn't throw"), and the `net.minestom.testing` `Collector#collect()` footgun that can make
+  a working feature look broken in a hand-rolled verification test.
+- **`cloud-minestom-reviewer` agent** — a review pass tuned to this repo's own written-down rules
+  (`CLAUDE.md`'s architecture principles, ADR triggers, both testing layers present, spec/roadmap
+  consistency, commit/PR granularity) rather than a generic code review. Run it after implementing a
+  roadmap item and before opening a PR.
