@@ -20,7 +20,7 @@ the `net.minestom:testing` integration harness from P2.
 - [x] P6 — Exception handling & feedback
 - [x] P7 — Help
 - [x] P8 — Custom parsers
-- [ ] P9 — Annotation commands
+- [x] P9 — Annotation commands
 - [ ] P10 — `cloud-minestom-bom`
 - [ ] P11 — `minestom-demo`
 - [ ] P12 — Documentation
@@ -283,14 +283,14 @@ fallback shape.
 
 Spec §10. No dedicated module — `cloud-annotations` used directly.
 
-- [ ] `docs/annotations.md` getting-started snippet: constructing `AnnotationParser<C>` against
+- [x] `docs/annotations.md` getting-started snippet: constructing `AnnotationParser<C>` against
       `MinestomCommandManager<C>`
-- [ ] `@EnvTest`: an `@Command`-annotated method registers and executes correctly through the same
+- [x] `@EnvTest`: an `@Command`-annotated method registers and executes correctly through the same
       manager as a builder-declared command
-- [ ] `@EnvTest`: `@Permission` on an annotated command is enforced through the P5 permission function
-- [ ] `@EnvTest`: `@Suggestions`-provided suggestions surface correctly through the P3 suggestion
+- [x] `@EnvTest`: `@Permission` on an annotated command is enforced through the P5 permission function
+- [x] `@EnvTest`: `@Suggestions`-provided suggestions surface correctly through the P3 suggestion
       bridge
-- [ ] `@EnvTest`: an annotated command using an `@Argument Player` parameter resolves through the P8
+- [x] `@EnvTest`: an annotated command using an `@Argument Player` parameter resolves through the P8
       `PlayerParser`
 
 ## P10 — `cloud-minestom-bom`
