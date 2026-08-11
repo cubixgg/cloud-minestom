@@ -152,27 +152,30 @@ P2/spec §1.1. Each row of spec §5.2's table is its own item.
       spec §5.2)
 - [x] Built-in mapper: `DurationParser` → `Time`, with the grammar mismatch from spec §5.2 covered by
       a unit test pinning the documented behavior, not silently coercing it
-- [ ] Fallback mapping: any parser without a registered mapper → `Word`/`String`/`StringArray` chosen
+- [x] Fallback mapping: any parser without a registered mapper → `Word`/`String`/`StringArray` chosen
       by whether the component is greedy/last (spec §5.1, row 3)
-- [ ] `CommandTreeTranslator`: pure function from a Cloud `CommandNode<C>` (via
+- [x] `CommandTreeTranslator`: pure function from a Cloud `CommandNode<C>` (via
       `CommandManager#commandTree()`) to a nested `Argument<?>` graph plus a list of
       `(Argument<?>[] syntax, executor)` pairs, using the registry above — no Minestom server
       interaction, unit-testable standalone
-- [ ] Literal node translation: inner (non-root) literals via `ArgumentType.Literal`, including
+- [x] Literal node translation: inner (non-root) literals via `ArgumentType.Literal`, including
       aliases
-- [ ] Optional-variable components: `.setOptional()` wrapping, verified against Cloud's own
-      optional-component ordering rules
-- [ ] `CommandComponent` → `ArgumentMapper` dispatch inside the translator, falling back per the item
+- [x] Optional-variable components: given a (never-read) default value via `Argument#setDefaultValue`
+      - Minestom has no `setOptional()`; `isOptional()` is derived from having a default value
+      supplier, verified against Cloud's own optional-component ordering rules
+- [x] `CommandComponent` → `ArgumentMapper` dispatch inside the translator, falling back per the item
       above when no mapper is registered for the component's parser
-- [ ] Replace `MinestomCommandRegistrationHandler`'s P2 flat-fallback-only registration with the full
+- [x] Replace `MinestomCommandRegistrationHandler`'s P2 flat-fallback-only registration with the full
       `CommandTreeTranslator` output
 - [ ] Confirm (and pin with a test) that every generated syntax executor — mapped node or fallback —
       still re-joins the raw input and dispatches through `executeCommand(...)`; Minestom's own parsed
       argument values are never read into the handler (spec §5.4)
-- [ ] Generalize `CloudSuggestionCallback` to compute the correct partial-line slice for an arbitrary
-      node position, not just "whole remainder" from P2
-- [ ] Attach the generalized suggestion callback to every mapped node, not only the fallback
-- [ ] `MinestomCommandManager.Builder#argumentMapper(...)` / `argumentMapperRegistry(...)`: lets
+- [x] ~~Generalize~~ `CloudSuggestionCallback` needed no changes: Minecraft's tab-complete protocol
+      always sends the whole currently-typed line (never a mid-line cursor position), so
+      `context.getInput()` is already the correct input for Cloud's suggestion factory regardless of
+      which node's callback fires - confirmed by the `@EnvTest` below, not assumed
+- [x] Attach the (unchanged) suggestion callback to every mapped node, not only the fallback
+- [x] `MinestomCommandManager.Builder#argumentMapper(...)` / `argumentMapperRegistry(...)`: lets
       consumers register or replace mappers, mirroring `CloudBrigadierManager`'s registration API
 - [x] Unit test per built-in mapper (one test class, one method per parser from the list above):
       given a configured Cloud parser, assert the produced `Argument` type and its options
