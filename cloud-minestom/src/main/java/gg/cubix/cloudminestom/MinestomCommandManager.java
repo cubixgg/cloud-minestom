@@ -1,5 +1,7 @@
 package gg.cubix.cloudminestom;
 
+import gg.cubix.cloudminestom.argument.ArgumentMapper;
+import gg.cubix.cloudminestom.argument.ArgumentMapperRegistry;
 import gg.cubix.cloudminestom.registration.MinestomCommandRegistrationHandler;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -30,14 +32,17 @@ public final class MinestomCommandManager<C> extends CommandManager<C> {
     private MinestomCommandManager(
             final SenderMapper<CommandSender, C> senderMapper,
             final ExecutionCoordinator<C> executionCoordinator,
-            final Consumer<Command> commandRegistrationCallback
+            final Consumer<Command> commandRegistrationCallback,
+            final ArgumentMapperRegistry argumentMapperRegistry
     ) {
         super(executionCoordinator, CommandRegistrationHandler.nullCommandRegistrationHandler());
         this.senderMapper = senderMapper;
         // Can't hand `this` to the registration handler before `super(...)` returns, so it replaces
         // the temporary null handler above via CommandManager's protected setter instead of being
         // passed to the super() call directly.
-        this.commandRegistrationHandler(new MinestomCommandRegistrationHandler<>(this, commandRegistrationCallback));
+        this.commandRegistrationHandler(
+                new MinestomCommandRegistrationHandler<>(this, commandRegistrationCallback, argumentMapperRegistry)
+        );
     }
 
     /**
@@ -101,6 +106,7 @@ public final class MinestomCommandManager<C> extends CommandManager<C> {
         // already be initialized even for consumers who override this callback (or construct the
         // manager before MinecraftServer.init()). The lambda defers the lookup to first registration.
         private Consumer<Command> commandRegistrationCallback = command -> MinecraftServer.getCommandManager().register(command);
+        private ArgumentMapperRegistry argumentMapperRegistry = ArgumentMapperRegistry.createDefault();
 
         private Builder(final SenderMapper<CommandSender, C> senderMapper) {
             this.senderMapper = Objects.requireNonNull(senderMapper, "senderMapper");
@@ -133,12 +139,41 @@ public final class MinestomCommandManager<C> extends CommandManager<C> {
         }
 
         /**
+         * Replaces the registry of {@link ArgumentMapper}s used to translate Cloud components into
+         * native Minestom arguments. Defaults to {@link ArgumentMapperRegistry#createDefault()}.
+         * Calls to {@link #argumentMapper(Class, ArgumentMapper)} made before this replace the
+         * registry are lost - set this first if both are used together.
+         *
+         * @param argumentMapperRegistry the replacement registry
+         * @return this builder
+         */
+        public Builder<C> argumentMapperRegistry(final ArgumentMapperRegistry argumentMapperRegistry) {
+            this.argumentMapperRegistry = Objects.requireNonNull(argumentMapperRegistry, "argumentMapperRegistry");
+            return this;
+        }
+
+        /**
+         * Registers or replaces a single {@link ArgumentMapper} on this builder's
+         * {@link ArgumentMapperRegistry}, mirroring {@code CloudBrigadierManager}'s own
+         * Cloud-parser-to-native-type registration API.
+         *
+         * @param parserType the concrete Cloud parser class to map, e.g. {@code IntegerParser.class}
+         * @param mapper     the mapper to use for that parser type
+         * @param <T>        the type of value the parser produces
+         * @return this builder
+         */
+        public <T> Builder<C> argumentMapper(final Class<?> parserType, final ArgumentMapper<T> mapper) {
+            this.argumentMapperRegistry.register(parserType, mapper);
+            return this;
+        }
+
+        /**
          * Builds the manager.
          *
          * @return the built manager
          */
         public MinestomCommandManager<C> build() {
-            return new MinestomCommandManager<>(senderMapper, executionCoordinator, commandRegistrationCallback);
+            return new MinestomCommandManager<>(senderMapper, executionCoordinator, commandRegistrationCallback, argumentMapperRegistry);
         }
     }
 }

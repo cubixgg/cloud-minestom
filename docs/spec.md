@@ -184,7 +184,7 @@ it is handed to `net.minestom.server.command.builder.Command#addSyntax`.
 | Cloud component | Minestom node |
 |---|---|
 | Root/inner literal, incl. aliases | `ArgumentType.Literal(name)`, aliases via Minestom's literal alternative support |
-| Required/optional variable, parser has a built-in mapping | the mapped `Argument<T>` (see [§5.2](#52-built-in-argument-mappings)), wrapped `.setOptional()` when the Cloud component is optional |
+| Required/optional variable, parser has a built-in mapping | the mapped `Argument<T>` (see [§5.2](#52-built-in-argument-mappings)); when the Cloud component is optional, given a (never-read) default value via `Argument#setDefaultValue` - Minestom has no `setOptional()`, `Argument#isOptional()` is derived from having a non-null default value supplier, which is also what makes `Command#addSyntax` generate both the short and long form for a trailing optional argument |
 | Required/optional variable, no built-in mapping | fallback `Argument<String>` (`Word` if the parser consumes one token, `String`/`StringArray` if it can contain spaces or is the last component), suggestions from Cloud (see [§5.3](#53-suggestions)) |
 | Flags (`--name value`, presence flags) | fallback trailing `ArgumentStringArray`, entire flag subtree handed to Cloud verbatim from that point on (see [§5.5](#55-known-limitation-flags)) |
 
