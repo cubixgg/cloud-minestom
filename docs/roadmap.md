@@ -54,8 +54,9 @@ Turns the current single-module scaffold into the multi-module layout from spec 
       (spec §10 — optional for consumers who don't use annotations), `implementation(libs.slf4j.api)`,
       JUnit test deps (also `testImplementation(libs.cloud.annotations)`, needed by later
       annotation-related tests in P9)
-- [ ] Create `cloud-minestom/src/main/java/gg/cubix/cloudminestom` package root with a placeholder
-      compile-anchor class (mirrors the convention of documenting module scope in one landing class)
+- [x] Create `cloud-minestom/src/main/java/gg/cubix/cloudminestom` package root with a placeholder
+      compile-anchor class (mirrors the convention of documenting module scope in one landing class):
+      `CloudMinestom`
 - [ ] Create `cloud-minestom-bom/build.gradle.kts`: `java-platform` plugin, empty constraints block
       (filled in P10)
 - [ ] Create `minestom-demo/build.gradle.kts`: `application` plugin,
