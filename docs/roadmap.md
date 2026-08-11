@@ -40,11 +40,14 @@ Turns the current single-module scaffold into the multi-module layout from spec 
       (5.2.0, matching what the pinned Minestom version itself ships), `junit` (6.1.2), `slf4j` (2.0.18).
       Corrects a mislabeling in the original item text, which grouped `cloud-annotations` under the
       `cloud-minecraft` pin — verified against both repos' actual tags before writing the catalog.
-- [ ] Convert root `build.gradle.kts` into a parent build: remove the `java` plugin and dependency
-      block, keep only `allprojects`/`subprojects` shared config (group, repositories, Java toolchain)
-- [ ] Delete the placeholder root `src/main/java`, `src/main/resources`, `src/test/java`,
-      `src/test/resources` directories (they belong to the old single-module scaffold, not the parent
-      build)
+- [x] Convert root `build.gradle.kts` into a parent build: remove the `java` plugin and dependency
+      block, keep only `subprojects` shared config (group, repositories, Java toolchain via the
+      version catalog). The toolchain config only fires for subprojects that apply a `java`-family
+      plugin (`plugins.withType<JavaBasePlugin>`), so it safely skips `cloud-minestom-bom`'s
+      `java-platform` plugin, which cannot coexist with `java`/`java-library`.
+- [x] Delete the placeholder root `src/main/java`, `src/main/resources`, `src/test/java`,
+      `src/test/resources` directories — already gone (they were always empty and Git never tracked
+      them), nothing to delete
 - [ ] Update `settings.gradle.kts` to include `cloud-minestom`, `cloud-minestom-bom`, `minestom-demo`
 - [ ] Create `cloud-minestom/build.gradle.kts`: `java-library` plugin, `api(libs.cloud.core)`,
       `api(libs.minestom)`, `api(libs.cloud.minecraft.extras)`, `compileOnly(libs.cloud.annotations)`

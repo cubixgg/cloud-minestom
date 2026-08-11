@@ -1,20 +1,22 @@
-plugins {
-    id("java")
-}
+// Parent build only - no sources of its own (spec.md §3). Real modules are cloud-minestom,
+// cloud-minestom-bom and minestom-demo; this file just applies shared config to all of them.
 
-group = "gg.cubix.cloudminestom"
-version = "1.0-SNAPSHOT"
+subprojects {
+    group = "gg.cubix.cloudminestom"
+    version = "1.0-SNAPSHOT"
 
-repositories {
-    mavenCentral()
-}
+    repositories {
+        mavenCentral()
+    }
 
-dependencies {
-    testImplementation(platform("org.junit:junit-bom:6.0.0"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-}
-
-tasks.test {
-    useJUnitPlatform()
+    // Skips cloud-minestom-bom on purpose: the java-platform plugin it uses is mutually exclusive
+    // with java/java-library, so it never applies JavaBasePlugin and this block simply doesn't run
+    // for it.
+    plugins.withType<JavaBasePlugin> {
+        extensions.configure<JavaPluginExtension> {
+            toolchain {
+                languageVersion = JavaLanguageVersion.of(libs.versions.java.get().toInt())
+            }
+        }
+    }
 }
