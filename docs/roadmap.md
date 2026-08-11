@@ -287,7 +287,7 @@ Spec §10. No dedicated module — `cloud-annotations` used directly.
       `MinestomCommandManager<C>`
 - [x] `@EnvTest`: an `@Command`-annotated method registers and executes correctly through the same
       manager as a builder-declared command
-- [ ] `@EnvTest`: `@Permission` on an annotated command is enforced through the P5 permission function
+- [x] `@EnvTest`: `@Permission` on an annotated command is enforced through the P5 permission function
 - [ ] `@EnvTest`: `@Suggestions`-provided suggestions surface correctly through the P3 suggestion
       bridge
 - [ ] `@EnvTest`: an annotated command using an `@Argument Player` parameter resolves through the P8
