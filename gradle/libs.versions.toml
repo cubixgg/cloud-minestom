@@ -1,0 +1,31 @@
+[versions]
+# Minestom's own floor; bump only when the pinned Minestom version below bumps (spec.md §2).
+java = "21"
+# Minestom uses calendar+semver tags (YYYY.MM.DD-<minecraft-version>). Check for updates against
+# https://github.com/Minestom/Minestom/releases; keep docs/compatibility.md in sync on every bump.
+minestom = "2026.08.07-26.2"
+# org.incendo:cloud-core and org.incendo:cloud-annotations are both published from the Incendo/cloud
+# monorepo under the same tag - cloud-annotations tracks this version, not `cloud-minecraft` below.
+cloud = "2.1.0"
+# org.incendo:cloud-minecraft-extras is published from the separate Incendo/cloud-minecraft monorepo,
+# which currently trails the core `cloud` version (2.0.0 vs. 2.1.0) - do not assume they move in lockstep.
+cloud-minecraft = "2.0.0"
+# Pinned to what the Minestom version above actually ships, per its own gradle/libs.versions.toml.
+adventure = "5.2.0"
+slf4j = "2.0.18"
+junit = "6.1.2"
+
+[libraries]
+minestom = { module = "net.minestom:minestom", version.ref = "minestom" }
+
+cloud-core = { module = "org.incendo:cloud-core", version.ref = "cloud" }
+cloud-annotations = { module = "org.incendo:cloud-annotations", version.ref = "cloud" }
+cloud-minecraft-extras = { module = "org.incendo:cloud-minecraft-extras", version.ref = "cloud-minecraft" }
+
+adventure-api = { module = "net.kyori:adventure-api", version.ref = "adventure" }
+
+slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
+
+junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher" }

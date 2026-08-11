@@ -33,9 +33,13 @@ the `net.minestom:testing` integration harness from P2.
 
 Turns the current single-module scaffold into the multi-module layout from spec §3.
 
-- [ ] Add `gradle/libs.versions.toml` with pinned versions: `java` (21), `minestom`, `cloud` (2.1.0),
-      `cloud-minecraft` (2.0.0, covers `cloud-minecraft-extras` + `cloud-annotations`), `adventure`,
-      `junit`, `slf4j`
+- [x] Add `gradle/libs.versions.toml` with pinned versions: `java` (21), `minestom` (2026.08.07-26.2),
+      `cloud` (2.1.0 — covers `cloud-core` **and** `cloud-annotations`, both published from the same
+      `Incendo/cloud` monorepo tag), `cloud-minecraft` (2.0.0 — `cloud-minecraft-extras`, published
+      separately from `Incendo/cloud-minecraft` and currently trailing `cloud`'s version), `adventure`
+      (5.2.0, matching what the pinned Minestom version itself ships), `junit` (6.1.2), `slf4j` (2.0.18).
+      Corrects a mislabeling in the original item text, which grouped `cloud-annotations` under the
+      `cloud-minecraft` pin — verified against both repos' actual tags before writing the catalog.
 - [ ] Convert root `build.gradle.kts` into a parent build: remove the `java` plugin and dependency
       block, keep only `allprojects`/`subprojects` shared config (group, repositories, Java toolchain)
 - [ ] Delete the placeholder root `src/main/java`, `src/main/resources`, `src/test/java`,
