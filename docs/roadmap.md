@@ -174,7 +174,7 @@ P2/spec §1.1. Each row of spec §5.2's table is its own item.
 - [ ] Attach the generalized suggestion callback to every mapped node, not only the fallback
 - [ ] `MinestomCommandManager.Builder#argumentMapper(...)` / `argumentMapperRegistry(...)`: lets
       consumers register or replace mappers, mirroring `CloudBrigadierManager`'s registration API
-- [ ] Unit test per built-in mapper (one test class, one method per parser from the list above):
+- [x] Unit test per built-in mapper (one test class, one method per parser from the list above):
       given a configured Cloud parser, assert the produced `Argument` type and its options
 - [ ] Unit test: a multi-literal, multi-argument command tree translates into the expected nested
       `Argument` graph shape
