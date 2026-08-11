@@ -2,10 +2,10 @@
 
 This is the implementation checklist for [`spec.md`](./spec.md), broken into the smallest steps that
 still make sense as one commit. See [`CONTRIBUTING.md`](./CONTRIBUTING.md) for the workflow this
-drives: one item = one commit = one PR (no direct commits to `main`, ever), box checked in the same
-commit as the implementation, phase order is the recommended build/test order but not a hard
-dependency. If an item turns out bigger than it looked, split it into sub-items here instead of
-batching it with something else.
+drives: one item = one commit (no direct commits to `main`, ever), box checked in the same commit as
+the implementation, PRs grouped per phase rather than per item, phase order is the recommended
+build/test order but not a hard dependency. If an item turns out bigger than it looked, split it into
+sub-items here instead of batching it with something else.
 
 Every item that adds behavior needs the tests called out for it (or better, if not called out) —
 "Unit Tests sind auch wichtig" is not optional per project scope. Items phrased as `@EnvTest` require

@@ -24,9 +24,13 @@ See [`README.md`](./README.md) for more on local development.
   branch and lands through a PR, every time, no exceptions carved out for "it's trivial."
 - Pick the next unchecked item in `roadmap.md`. Phase order is the recommended build/test order, not
   a strict dependency.
-- **One item = one commit = one PR.** Don't batch multiple checkboxes into one commit/PR, even if both
-  are small and related. If an item turns out to be too big while implementing, split it into further
-  sub-items in the roadmap instead.
+- **One item = one commit.** Don't fold multiple checkboxes into one commit, even if both are small and
+  related - each commit should be reviewable and revertable on its own. If an item turns out to be too
+  big for one commit, split it into further sub-items in the roadmap instead.
+- **PRs are grouped per roadmap phase (P0, P1, ...), not per item.** A phase's commits land on one
+  branch and go out as one PR once the phase (or a sensible chunk of it) is done - not a PR per
+  checkbox. Use judgment on where a phase's PR boundary actually falls; a phase that's naturally two
+  reviewable halves can be two PRs, but don't default to the smallest possible PR.
 - Check the box in `roadmap.md` in the same commit as the implementation - never leave it out of sync,
   even briefly.
 - If implementing an item reveals a real gap or correction in `spec.md`, fix `spec.md` in the same
@@ -59,7 +63,7 @@ the Conventional Commits type spelled out: `feature`, `fix`, `chore`, `docs`, `r
 ## Pull requests
 
 - Base branch: `main`. `main` only ever receives merged PRs, never a direct push.
-- One PR per roadmap item (see Workflow above).
+- One PR per roadmap phase (or sensible chunk of one), not per item (see Workflow above).
 - Make sure `./gradlew build` passes before opening.
 
 ## Testing
