@@ -19,6 +19,7 @@ dependencies {
     testImplementation(platform(libs.junit.bom))
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.cloud.annotations)
+    testImplementation(libs.minestom.testing)
     testRuntimeOnly(libs.junit.platform.launcher)
 }
 

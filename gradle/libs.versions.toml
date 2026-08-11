@@ -17,6 +17,7 @@ junit = "6.1.2"
 
 [libraries]
 minestom = { module = "net.minestom:minestom", version.ref = "minestom" }
+minestom-testing = { module = "net.minestom:testing", version.ref = "minestom" }
 
 cloud-core = { module = "org.incendo:cloud-core", version.ref = "cloud" }
 cloud-annotations = { module = "org.incendo:cloud-annotations", version.ref = "cloud" }

@@ -108,7 +108,7 @@ Gets one full round trip working — register, execute, suggest — before nativ
 (P3) adds complexity on top. Deliberately close in shape to the simplest possible bridge so the
 "why not just this" contrast in spec §1.1 is visible in the repo's own history.
 
-- [ ] `net.minestom:testing` added as a test dependency to `cloud-minestom`
+- [x] `net.minestom:testing` added as a test dependency to `cloud-minestom`
 - [ ] `MinestomCommandManager.Builder#commandRegistrationCallback(Consumer<Command>)`: how built
       native commands reach the server; default `MinecraftServer.getCommandManager()::register`
 - [ ] `MinestomCommandRegistrationHandler<C>` implementing Cloud's `CommandRegistrationHandler<C>`:
