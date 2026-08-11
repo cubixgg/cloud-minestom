@@ -19,7 +19,7 @@ the `net.minestom:testing` integration harness from P2.
 - [x] P5 — Permissions
 - [x] P6 — Exception handling & feedback
 - [x] P7 — Help
-- [ ] P8 — Custom parsers
+- [x] P8 — Custom parsers
 - [ ] P9 — Annotation commands
 - [ ] P10 — `cloud-minestom-bom`
 - [ ] P11 — `minestom-demo`
@@ -277,7 +277,7 @@ fallback shape.
 - [x] Unit test: `PlayerParser` suggestions list currently-online names only
 - [x] Unit test: `PlayerParser` maps to a single-player-only `Entity` argument (added alongside the
       mapper item above, see the correction note)
-- [ ] `@EnvTest`: `PlayerParser` resolves and suggests correctly against real virtual players
+- [x] `@EnvTest`: `PlayerParser` resolves and suggests correctly against real virtual players
 
 ## P9 — Annotation commands
 
