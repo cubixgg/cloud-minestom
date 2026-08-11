@@ -17,7 +17,7 @@ the `net.minestom:testing` integration harness from P2.
 - [x] P3 — Native argument-tree translation
 - [x] P4 — Flags (documented fallback)
 - [x] P5 — Permissions
-- [ ] P6 — Exception handling & feedback
+- [x] P6 — Exception handling & feedback
 - [ ] P7 — Help
 - [ ] P8 — Custom parsers
 - [ ] P9 — Annotation commands
@@ -237,10 +237,10 @@ manually registered handler alongside those, styled the same way.
       styled the same way
 - [x] `MinestomCommandManager.Builder#exceptionHandler(...)` override hook, documented as a thin
       wrapper over `exceptionController()` rather than a new concept
-- [ ] Unit test: default handlers produce feedback for `NoPermissionException`,
+- [x] Unit test: default handlers produce feedback for `NoPermissionException`,
       `InvalidSyntaxException`, `ArgumentParseException`, `InvalidCommandSenderException` and
       `NoSuchCommandException`, driven directly against `exceptionController()` (no live server needed)
-- [ ] `@EnvTest`: a command that throws mid-handler results in the sender receiving the expected
+- [x] `@EnvTest`: a command that throws mid-handler results in the sender receiving the expected
       feedback component
 
 ## P7 — Help
