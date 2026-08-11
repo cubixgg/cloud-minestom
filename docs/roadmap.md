@@ -333,7 +333,7 @@ the rest are written, plus the index tying them together.
 - [x] `docs/threading.md` (spec §4.1, §5.3)
 - [x] `docs/help-and-exceptions.md` — expand the P7 stub into a full page, add spec §7 content
 - [x] `docs/limitations.md` — expand the P4 stub if any further limitations surfaced during P3
-- [ ] `docs/compatibility.md` — Java/Minestom/Cloud version table (spec §2), process note for keeping
+- [x] `docs/compatibility.md` — Java/Minestom/Cloud version table (spec §2), process note for keeping
       it updated on every version-catalog bump
 - [ ] `docs/decisions/0001-cloud-is-the-single-source-of-truth-for-parsing.md` (spec §5.4)
 - [ ] `docs/decisions/0002-simple-execution-coordinator-by-default.md` (spec §4.1)
