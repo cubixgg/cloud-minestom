@@ -297,7 +297,7 @@ Spec §10. No dedicated module — `cloud-annotations` used directly.
 
 Spec §3.2.
 
-- [ ] `cloud-minestom-bom/build.gradle.kts`: constraints for `cloud-minestom`, `cloud-core`,
+- [x] `cloud-minestom-bom/build.gradle.kts`: constraints for `cloud-minestom`, `cloud-core`,
       `cloud-annotations`, `cloud-minecraft-extras` at the versions pinned in `libs.versions.toml`
 - [ ] Manual verification (documented in the PR description, not a unit test): a throwaway consumer
       project importing only the BOM resolves all four artifacts without further version pins
