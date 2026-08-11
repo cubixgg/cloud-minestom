@@ -306,7 +306,7 @@ Spec §3.2.
 
 Spec §13. One item per demo command so each is its own reviewable, checkoffable step.
 
-- [ ] `minestom-demo` `Main` class: boots `MinecraftServer` on a flat/void instance, registers
+- [x] `minestom-demo` `Main` class: boots `MinecraftServer` on a flat/void instance, registers
       `MinestomCommandManager`
 - [ ] Demo command: builder-declared literal subcommand tree with a bounded `IntegerParser` argument,
       an optional argument, and Cloud-suggested string choices
