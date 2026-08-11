@@ -59,8 +59,10 @@ Turns the current single-module scaffold into the multi-module layout from spec 
       `CloudMinestom`
 - [x] Create `cloud-minestom-bom/build.gradle.kts`: `java-platform` plugin, empty constraints block
       (filled in P10)
-- [ ] Create `minestom-demo/build.gradle.kts`: `application` plugin,
-      `implementation(project(":cloud-minestom"))`, `implementation(libs.cloud.annotations)`
+- [x] Create `minestom-demo/build.gradle.kts`: `application` plugin,
+      `implementation(project(":cloud-minestom"))`, `implementation(libs.cloud.annotations)`.
+      `application.mainClass` deliberately left unset until P11 adds the `Main` class it needs to
+      point at.
 - [ ] Pick and record a license (MIT, matching Cloud's own license and the prior community ports);
       add `LICENSE` at repo root
 - [ ] Add root `README.md`: what the project is, links to `spec.md`/`roadmap.md`/`docs/`, build badge
