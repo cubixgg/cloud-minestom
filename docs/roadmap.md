@@ -33,13 +33,15 @@ the `net.minestom:testing` integration harness from P2.
 
 Turns the current single-module scaffold into the multi-module layout from spec §3.
 
-- [x] Add `gradle/libs.versions.toml` with pinned versions: `java` (21), `minestom` (2026.08.07-26.2),
-      `cloud` (2.1.0 — covers `cloud-core` **and** `cloud-annotations`, both published from the same
-      `Incendo/cloud` monorepo tag), `cloud-minecraft` (2.0.0 — `cloud-minecraft-extras`, published
-      separately from `Incendo/cloud-minecraft` and currently trailing `cloud`'s version), `adventure`
-      (5.2.0, matching what the pinned Minestom version itself ships), `junit` (6.1.2), `slf4j` (2.0.18).
-      Corrects a mislabeling in the original item text, which grouped `cloud-annotations` under the
-      `cloud-minecraft` pin — verified against both repos' actual tags before writing the catalog.
+- [x] Add `gradle/libs.versions.toml` with pinned versions: `java` (25 — the pinned Minestom version
+      below turned out to require it; see the correction noted under item 12), `minestom`
+      (2026.08.07-26.2), `cloud` (2.1.0 — covers `cloud-core` **and** `cloud-annotations`, both
+      published from the same `Incendo/cloud` monorepo tag), `cloud-minecraft` (2.0.0 —
+      `cloud-minecraft-extras`, published separately from `Incendo/cloud-minecraft` and currently
+      trailing `cloud`'s version), `adventure` (5.2.0, matching what the pinned Minestom version itself
+      ships), `junit` (6.1.2), `slf4j` (2.0.18). Corrects a mislabeling in the original item text, which
+      grouped `cloud-annotations` under the `cloud-minecraft` pin — verified against both repos' actual
+      tags before writing the catalog.
 - [x] Convert root `build.gradle.kts` into a parent build: remove the `java` plugin and dependency
       block, keep only `subprojects` shared config (group, repositories, Java toolchain via the
       version catalog). The toolchain config only fires for subprojects that apply a `java`-family
@@ -71,7 +73,13 @@ Turns the current single-module scaffold into the multi-module layout from spec 
 - [x] Add GitHub Actions workflow `.github/workflows/build.yml`: `./gradlew build` on push and PR,
       using the JDK pinned in `libs.versions.toml` (hardcoded in the workflow YAML with a keep-in-sync
       comment, since Actions' `setup-java` needs a literal value and can't read the Gradle catalog)
-- [ ] Verify `./gradlew build` succeeds on the empty multi-module skeleton before any real code lands
+- [x] Verify `./gradlew build` succeeds on the empty multi-module skeleton before any real code lands.
+      First attempt failed: `net.minestom:minestom:2026.08.07-26.2` is compiled for JVM 25, not 21 as
+      `spec.md` §2 originally (incorrectly) claimed as Minestom's floor - a stale assumption, not
+      something actually verified against the pinned artifact when spec.md was written. Corrected the
+      `java` catalog entry to 25 and every doc that repeated the wrong number
+      (`spec.md`, `CLAUDE.md`, `CONTRIBUTING.md`, `README.md`, `.github/workflows/build.yml`) in the
+      same commit; build passes clean after the fix.
 
 ## P1 — Command manager core
 

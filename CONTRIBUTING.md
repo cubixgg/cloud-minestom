@@ -10,7 +10,7 @@ Thanks for looking at contributing to `cloud-minestom`. Before making changes, s
 
 ## Setup
 
-- JDK 21 (see `gradle/libs.versions.toml` for the exact pinned version)
+- JDK 25 (see `gradle/libs.versions.toml` for the exact pinned version)
 - `./gradlew build` builds and tests every module (`cloud-minestom`, `cloud-minestom-bom`,
   `minestom-demo`)
 - `./gradlew :minestom-demo:run` starts the example server from [§13 of `spec.md`](./docs/spec.md#13-minestom-demo)

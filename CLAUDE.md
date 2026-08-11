@@ -39,7 +39,7 @@ greedy-string bridge.
 
 ## Code style
 
-- **Java 21**, matching Minestom's own floor (spec §2). Bump only when the pinned Minestom version in
+- **Java 25**, matching Minestom's own floor (spec §2). Bump only when the pinned Minestom version in
   `gradle/libs.versions.toml` bumps.
 - Package root: `gg.cubix.cloudminestom`, sub-packaged per spec §3.1's table
   (`registration`, `argument`, `suggestion`, `parser`, `exception`). A new top-level package needs a

@@ -1,6 +1,6 @@
 [versions]
 # Minestom's own floor; bump only when the pinned Minestom version below bumps (spec.md §2).
-java = "21"
+java = "25"
 # Minestom uses calendar+semver tags (YYYY.MM.DD-<minecraft-version>). Check for updates against
 # https://github.com/Minestom/Minestom/releases; keep docs/compatibility.md in sync on every bump.
 minestom = "2026.08.07-26.2"
