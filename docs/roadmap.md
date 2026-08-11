@@ -18,7 +18,7 @@ the `net.minestom:testing` integration harness from P2.
 - [x] P4 — Flags (documented fallback)
 - [x] P5 — Permissions
 - [x] P6 — Exception handling & feedback
-- [ ] P7 — Help
+- [x] P7 — Help
 - [ ] P8 — Custom parsers
 - [ ] P9 — Annotation commands
 - [ ] P10 — `cloud-minestom-bom`
@@ -247,9 +247,9 @@ manually registered handler alongside those, styled the same way.
 
 Spec §8.
 
-- [ ] `docs/help-and-exceptions.md` snippet: wiring `MinecraftHelp<C>` against
+- [x] `docs/help-and-exceptions.md` snippet: wiring `MinecraftHelp<C>` against
       `MinestomCommandManager` (no bridging adapter needed — `CommandSender` is already an `Audience`)
-- [ ] `@EnvTest`: `MinecraftHelp` renders and reaches a real virtual player's client without a
+- [x] `@EnvTest`: `MinecraftHelp` renders and reaches a real virtual player's client without a
       bridging adapter
 
 ## P8 — Custom parsers
