@@ -57,7 +57,7 @@ Turns the current single-module scaffold into the multi-module layout from spec 
 - [x] Create `cloud-minestom/src/main/java/gg/cubix/cloudminestom` package root with a placeholder
       compile-anchor class (mirrors the convention of documenting module scope in one landing class):
       `CloudMinestom`
-- [ ] Create `cloud-minestom-bom/build.gradle.kts`: `java-platform` plugin, empty constraints block
+- [x] Create `cloud-minestom-bom/build.gradle.kts`: `java-platform` plugin, empty constraints block
       (filled in P10)
 - [ ] Create `minestom-demo/build.gradle.kts`: `application` plugin,
       `implementation(project(":cloud-minestom"))`, `implementation(libs.cloud.annotations)`
