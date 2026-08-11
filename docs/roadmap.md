@@ -138,19 +138,19 @@ Gets one full round trip working — register, execute, suggest — before nativ
 Spec §5. The part that makes this a full implementation instead of the greedy-string shortcut from
 P2/spec §1.1. Each row of spec §5.2's table is its own item.
 
-- [ ] `ArgumentMapper<T>` interface (spec §5.2)
-- [ ] `ArgumentMapperRegistry`: register/look up an `ArgumentMapper` by Cloud parser class; unit
+- [x] `ArgumentMapper<T>` interface (spec §5.2)
+- [x] `ArgumentMapperRegistry`: register/look up an `ArgumentMapper` by Cloud parser class; unit
       tested standalone with hand-built fake mappers before any real one exists
-- [ ] Built-in mapper: `StringParser` (single/greedy/quoted) → `Word`/`StringArray`/`String`
-- [ ] Built-in mapper: `BooleanParser` → `Boolean`
-- [ ] Built-in mapper: `IntegerParser` → `Integer`, honoring configured min/max bounds
-- [ ] Built-in mapper: `LongParser` → `Long`, honoring bounds
-- [ ] Built-in mapper: `FloatParser` → `Float`, honoring bounds
-- [ ] Built-in mapper: `DoubleParser` → `Double`, honoring bounds
-- [ ] Built-in mapper: `UUIDParser` → `UUID`
-- [ ] Built-in mapper: `EnumParser<E>` → `Word` + Cloud suggestions (no native Minestom enum node,
+- [x] Built-in mapper: `StringParser` (single/greedy/quoted) → `Word`/`StringArray`/`String`
+- [x] Built-in mapper: `BooleanParser` → `Boolean`
+- [x] Built-in mapper: `IntegerParser` → `Integer`, honoring configured min/max bounds
+- [x] Built-in mapper: `LongParser` → `Long`, honoring bounds
+- [x] Built-in mapper: `FloatParser` → `Float`, honoring bounds
+- [x] Built-in mapper: `DoubleParser` → `Double`, honoring bounds
+- [x] Built-in mapper: `UUIDParser` → `UUID`
+- [x] Built-in mapper: `EnumParser<E>` → `Word` + Cloud suggestions (no native Minestom enum node,
       spec §5.2)
-- [ ] Built-in mapper: `DurationParser` → `Time`, with the grammar mismatch from spec §5.2 covered by
+- [x] Built-in mapper: `DurationParser` → `Time`, with the grammar mismatch from spec §5.2 covered by
       a unit test pinning the documented behavior, not silently coercing it
 - [ ] Fallback mapping: any parser without a registered mapper → `Word`/`String`/`StringArray` chosen
       by whether the component is greedy/last (spec §5.1, row 3)

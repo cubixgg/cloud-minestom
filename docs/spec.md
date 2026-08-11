@@ -199,13 +199,21 @@ interaction — so it is unit-testable on its own (see [§11](#11-testing-strate
 
 ```java
 public interface ArgumentMapper<T> {
-    Argument<?> map(CommandComponent<?> component, ParserDescriptor<?, T> parser);
+    Argument<?> map(CommandComponent<?> component, ArgumentParser<?, T> parser);
 }
 ```
 
-Registered per Cloud parser type in `ArgumentMapperRegistry`, keyed the same way Cloud's own
-`ParserRegistry` keys parsers (by `TypeToken`/parser class), mirroring how `CloudBrigadierManager`
-lets you register Cloud-parser → Brigadier-`ArgumentType` mappings. Ships with mappings for:
+Takes the component's own `ArgumentParser` rather than a `ParserDescriptor<?, T>`: `CommandComponent`
+only exposes its `ArgumentParser` at runtime (no `ParserDescriptor` accessor), and reconstructing one
+from the component's raw parser plus its wildcarded `valueType()` would need the exact same unchecked
+cast `ArgumentMapperRegistry` already performs once at dispatch time, so the extra indirection would
+buy nothing.
+
+Registered per Cloud parser type in `ArgumentMapperRegistry`, keyed by the parser's raw `Class` (a
+`.class` literal on a generic parser type always erases, so the registration key can't be tied to
+`<T>` statically - the registry's `map` method is where the corresponding unchecked cast happens,
+once, in one place), mirroring how `CloudBrigadierManager` lets you register Cloud-parser →
+Brigadier-`ArgumentType` mappings. Ships with mappings for:
 
 | Cloud parser | Minestom `Argument` |
 |---|---|
