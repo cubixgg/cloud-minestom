@@ -225,15 +225,21 @@ original wording.
 
 ## P6 — Exception handling & feedback
 
-Spec §7.
+Spec §7. **Corrected during implementation** (see spec.md §7's correction note):
+`MinecraftExceptionHandler` has no built-in handler for `NoSuchCommandException` at all - its
+`defaultHandlers()` covers `InvalidSyntaxException`, `InvalidCommandSenderException`,
+`NoPermissionException`, `ArgumentParseException` and `CommandExecutionException` (not originally
+listed, but skipping it would mean a handler bug fails silently). `NoSuchCommandException` gets a
+manually registered handler alongside those, styled the same way.
 
-- [ ] Default `MinecraftExceptionHandler` registration during `MinestomCommandManager` construction,
-      covering `NoPermissionException`, `InvalidSyntaxException`, `ArgumentParseException`,
-      `NoSuchCommandException`, `InvalidCommandSenderException`
-- [ ] `MinestomCommandManager.Builder#exceptionHandler(...)` override hook, documented as a thin
+- [x] Default `MinecraftExceptionHandler` registration during `MinestomCommandManager` construction
+      (its own `defaultHandlers()`), plus a manually registered `NoSuchCommandException` handler
+      styled the same way
+- [x] `MinestomCommandManager.Builder#exceptionHandler(...)` override hook, documented as a thin
       wrapper over `exceptionController()` rather than a new concept
-- [ ] Unit test: default handler produces feedback for each of the five exception types, driven
-      directly against `exceptionController()` (no live server needed)
+- [ ] Unit test: default handlers produce feedback for `NoPermissionException`,
+      `InvalidSyntaxException`, `ArgumentParseException`, `InvalidCommandSenderException` and
+      `NoSuchCommandException`, driven directly against `exceptionController()` (no live server needed)
 - [ ] `@EnvTest`: a command that throws mid-handler results in the sender receiving the expected
       feedback component
 

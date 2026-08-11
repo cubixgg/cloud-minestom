@@ -6,13 +6,20 @@ import gg.cubix.cloudminestom.registration.MinestomCommandRegistrationHandler;
 import java.util.Objects;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.command.CommandSender;
 import net.minestom.server.command.builder.Command;
 import org.incendo.cloud.CommandManager;
 import org.incendo.cloud.SenderMapper;
+import org.incendo.cloud.caption.CaptionVariable;
+import org.incendo.cloud.caption.StandardCaptionKeys;
+import org.incendo.cloud.exception.NoSuchCommandException;
 import org.incendo.cloud.execution.ExecutionCoordinator;
 import org.incendo.cloud.internal.CommandRegistrationHandler;
+import org.incendo.cloud.minecraft.extras.AudienceProvider;
+import org.incendo.cloud.minecraft.extras.MinecraftExceptionHandler;
 
 /**
  * Cloud v2 command manager for Minestom (docs/spec.md §4).
@@ -36,7 +43,8 @@ public final class MinestomCommandManager<C> extends CommandManager<C> {
             final ExecutionCoordinator<C> executionCoordinator,
             final Consumer<Command> commandRegistrationCallback,
             final ArgumentMapperRegistry argumentMapperRegistry,
-            final BiPredicate<C, String> permissionFunction
+            final BiPredicate<C, String> permissionFunction,
+            final Consumer<MinestomCommandManager<C>> exceptionHandlerRegistrar
     ) {
         super(executionCoordinator, CommandRegistrationHandler.nullCommandRegistrationHandler());
         this.senderMapper = senderMapper;
@@ -47,6 +55,35 @@ public final class MinestomCommandManager<C> extends CommandManager<C> {
         this.commandRegistrationHandler(
                 new MinestomCommandRegistrationHandler<>(this, commandRegistrationCallback, argumentMapperRegistry)
         );
+        exceptionHandlerRegistrar.accept(this);
+    }
+
+    /**
+     * The default {@link MinestomCommandManager.Builder#exceptionHandler(Consumer)}: wires
+     * {@code cloud-minecraft-extras}' {@link MinecraftExceptionHandler} for
+     * {@link org.incendo.cloud.exception.NoPermissionException NoPermissionException},
+     * {@link org.incendo.cloud.exception.InvalidSyntaxException InvalidSyntaxException},
+     * {@link org.incendo.cloud.exception.ArgumentParseException ArgumentParseException},
+     * {@link org.incendo.cloud.exception.InvalidCommandSenderException InvalidCommandSenderException}
+     * and {@link org.incendo.cloud.exception.CommandExecutionException CommandExecutionException}
+     * (its own {@code defaultHandlers()}), plus a manually registered, identically styled handler for
+     * {@link NoSuchCommandException} - {@code MinecraftExceptionHandler} has no default for that one
+     * (spec.md §7's correction note). {@code CommandSender} already implements Adventure's
+     * {@code Audience}, reached here via the reverse direction of {@link #senderMapper()}, so no
+     * bridging adapter is needed for any sender type {@code C}.
+     */
+    private static <C> void registerDefaultExceptionHandlers(final MinestomCommandManager<C> manager) {
+        final AudienceProvider<C> audienceProvider = sender -> manager.senderMapper().reverse(sender);
+        MinecraftExceptionHandler.<C>create(audienceProvider)
+                .defaultHandlers()
+                .handler(NoSuchCommandException.class, (formatter, ctx) -> Component.text()
+                        .color(NamedTextColor.RED)
+                        .append(ctx.context().formatCaption(
+                                formatter,
+                                StandardCaptionKeys.EXCEPTION_NO_SUCH_COMMAND,
+                                CaptionVariable.of("command", ctx.exception().suppliedCommand())
+                        )))
+                .registerTo(manager);
     }
 
     /**
@@ -115,6 +152,7 @@ public final class MinestomCommandManager<C> extends CommandManager<C> {
         // arbitrary String-keyed model. Projects with a real permission system (LuckPerms, an auth
         // service, a permissionLevel-based check) replace this wholesale.
         private BiPredicate<C, String> permissionFunction = (sender, permission) -> true;
+        private Consumer<MinestomCommandManager<C>> exceptionHandler = MinestomCommandManager::registerDefaultExceptionHandlers;
 
         private Builder(final SenderMapper<CommandSender, C> senderMapper) {
             this.senderMapper = Objects.requireNonNull(senderMapper, "senderMapper");
@@ -190,13 +228,29 @@ public final class MinestomCommandManager<C> extends CommandManager<C> {
         }
 
         /**
+         * Replaces exception-handler registration. A thin wrapper over
+         * {@code manager.exceptionController()} rather than a new concept (docs/spec.md §7): the
+         * default calls {@link MinestomCommandManager#registerDefaultExceptionHandlers}; supply a
+         * different callback to register your own handlers there instead, or in addition, by calling
+         * {@code manager.exceptionController().registerHandler(...)} directly.
+         *
+         * @param exceptionHandler the replacement registration callback
+         * @return this builder
+         */
+        public Builder<C> exceptionHandler(final Consumer<MinestomCommandManager<C>> exceptionHandler) {
+            this.exceptionHandler = Objects.requireNonNull(exceptionHandler, "exceptionHandler");
+            return this;
+        }
+
+        /**
          * Builds the manager.
          *
          * @return the built manager
          */
         public MinestomCommandManager<C> build() {
             return new MinestomCommandManager<>(
-                    senderMapper, executionCoordinator, commandRegistrationCallback, argumentMapperRegistry, permissionFunction
+                    senderMapper, executionCoordinator, commandRegistrationCallback, argumentMapperRegistry,
+                    permissionFunction, exceptionHandler
             );
         }
     }
