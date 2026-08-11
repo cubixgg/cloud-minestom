@@ -9,4 +9,6 @@ dependencies {
     implementation(libs.cloud.annotations)
 }
 
-// application.mainClass is wired up in P11 once minestom-demo's Main class exists.
+application {
+    mainClass = "gg.cubix.cloudminestom.demo.Main"
+}

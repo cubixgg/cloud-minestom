@@ -22,7 +22,7 @@ the `net.minestom:testing` integration harness from P2.
 - [x] P8 — Custom parsers
 - [x] P9 — Annotation commands
 - [x] P10 — `cloud-minestom-bom`
-- [ ] P11 — `minestom-demo`
+- [x] P11 — `minestom-demo`
 - [ ] P12 — Documentation
 - [ ] P13 — Claude Code tooling
 - [ ] P14 — Release & CI hardening
@@ -306,18 +306,18 @@ Spec §3.2.
 
 Spec §13. One item per demo command so each is its own reviewable, checkoffable step.
 
-- [ ] `minestom-demo` `Main` class: boots `MinecraftServer` on a flat/void instance, registers
+- [x] `minestom-demo` `Main` class: boots `MinecraftServer` on a flat/void instance, registers
       `MinestomCommandManager`
-- [ ] Demo command: builder-declared literal subcommand tree with a bounded `IntegerParser` argument,
+- [x] Demo command: builder-declared literal subcommand tree with a bounded `IntegerParser` argument,
       an optional argument, and Cloud-suggested string choices
-- [ ] Demo command: the same command shape re-declared via `@Command` annotations, to show parity
+- [x] Demo command: the same command shape re-declared via `@Command` annotations, to show parity
       between styles side by side
-- [ ] Demo command: `PlayerParser`-based "target a player" command
-- [ ] Demo command: a flagged command that demonstrates and comments on the P4 fallback behavior
-- [ ] Demo command: an intentionally-throwing command demonstrating default exception feedback
-- [ ] Demo command: `/demo help` wired through `MinecraftHelp`
-- [ ] Demo command: a permission-gated command demonstrating the default permission function
-- [ ] `minestom-demo/README.md`: how to run the demo server and what each command demonstrates
+- [x] Demo command: `PlayerParser`-based "target a player" command
+- [x] Demo command: a flagged command that demonstrates and comments on the P4 fallback behavior
+- [x] Demo command: an intentionally-throwing command demonstrating default exception feedback
+- [x] Demo command: `/demo help` wired through `MinecraftHelp`
+- [x] Demo command: a permission-gated command demonstrating the default permission function
+- [x] `minestom-demo/README.md`: how to run the demo server and what each command demonstrates
 
 ## P12 — Documentation
 
