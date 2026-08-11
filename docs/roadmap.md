@@ -335,9 +335,9 @@ the rest are written, plus the index tying them together.
 - [x] `docs/limitations.md` — expand the P4 stub if any further limitations surfaced during P3
 - [x] `docs/compatibility.md` — Java/Minestom/Cloud version table (spec §2), process note for keeping
       it updated on every version-catalog bump
-- [ ] `docs/decisions/0001-cloud-is-the-single-source-of-truth-for-parsing.md` (spec §5.4)
-- [ ] `docs/decisions/0002-simple-execution-coordinator-by-default.md` (spec §4.1)
-- [ ] `docs/decisions/0003-no-separate-annotations-or-extras-module.md` (spec §3)
+- [x] `docs/decisions/0001-cloud-is-the-single-source-of-truth-for-parsing.md` (spec §5.4)
+- [x] `docs/decisions/0002-simple-execution-coordinator-by-default.md` (spec §4.1)
+- [x] `docs/decisions/0003-no-separate-annotations-or-extras-module.md` (spec §3)
 - [x] `docs/decisions/0004-gradle-version-catalog-for-dependency-management.md` (spec §2) — written
       ahead of the rest of this phase since the decision was already made and needed recording
 - [x] `docs/decisions/0005-ai-assisted-development-with-claude-code.md` — same as above, project-process
