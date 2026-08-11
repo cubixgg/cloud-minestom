@@ -11,7 +11,7 @@ Every item that adds behavior needs the tests called out for it (or better, if n
 "Unit Tests sind auch wichtig" is not optional per project scope. Items phrased as `@EnvTest` require
 the `net.minestom:testing` integration harness from P2.
 
-- [ ] P0 — Repository & build scaffolding
+- [x] P0 — Repository & build scaffolding
 - [ ] P1 — Command manager core
 - [ ] P2 — Minimal end-to-end registration
 - [ ] P3 — Native argument-tree translation
