@@ -273,21 +273,30 @@ implementation of the described feature.
 ## 6. Permissions
 
 `MinestomCommandManager#hasPermission(C sender, String permission)` delegates to a
-`BiPredicate<C, String>` supplied through the builder. Default:
+`BiPredicate<C, String>` supplied through the builder.
 
-- Empty permission string → always allowed (Cloud's own convention).
-- Sender maps (via the reverse direction of `SenderMapper`) to a Minestom `CommandSender` that is a
-  `Player` → `player.hasPermission(new Permission(permission))` (Minestom's own permission node
-  check, wildcard matching included, since Minestom resolves `admin.*`-style nodes itself).
-  Overrides go through the sender's own `PermissionHandler`.
-- Sender maps to any other `CommandSender` (console, command blocks, function context) → always
-  allowed, matching vanilla/Bukkit/Velocity convention that non-player senders bypass permission
-  checks.
+**Correction (found during P5 implementation, docs/roadmap.md):** this section originally
+specified a default that checked `player.hasPermission(new Permission(permission))` against a
+Minestom-native permission-node system with `PermissionHandler` overrides and `admin.*`-style
+wildcard resolution, mirroring Bukkit. That system does not exist in the pinned Minestom version
+(or, per upstream, any recent one) - `net.minestom.server.permission` is gone entirely, and
+`CommandSender`/`Player` expose no `hasPermission`/`Permission`/`PermissionHandler` of any kind.
+The only permission-adjacent concept Minestom itself ships is `Player#getPermissionLevel()`, a
+vanilla-style numeric operator level (0-4) - unrelated in shape to Cloud's arbitrary, namespaced,
+String-keyed permission model (`"myplugin.command.foo"` vs. `"myplugin.command.bar"`), so mapping
+one onto the other would invent a cloud-minestom-specific convention Minestom doesn't have, giving
+a false impression of fine-grained control that's actually just a single binary gate - the kind of
+"wrong answer that looks right" `CLAUDE.md` explicitly warns against, not a documented gap.
 
-This default is a `BiPredicate` so it composes with `SenderMapper` regardless of what `C` is —
-projects that resolve permissions externally (an auth service, a proxy-sent cache, a LuckPerms
-integration) replace it wholesale through the builder; the library never talks to an external
-permissions system itself.
+The actual default, therefore: **always allowed**, for every sender and every permission string,
+empty or not. This isn't a placeholder - it's the honest sane default for a platform with no
+native permission system to check against, matching the same "library never talks to an external
+system" principle the rest of this section already committed to. Projects that need real
+permission gating (an auth service, a proxy-sent cache, a LuckPerms integration, or a hand-rolled
+check against `Player#getPermissionLevel()`) replace the default wholesale through the builder -
+the `BiPredicate<C, String>` shape composes with `SenderMapper` regardless of what `C` is, so that
+replacement is where any Minestom-specific permission concept a project actually has gets plugged
+in, not baked into the library's own default.
 
 ## 7. Exception handling & feedback
 
