@@ -14,7 +14,7 @@ the `net.minestom:testing` integration harness from P2.
 - [x] P0 — Repository & build scaffolding
 - [x] P1 — Command manager core
 - [x] P2 — Minimal end-to-end registration
-- [ ] P3 — Native argument-tree translation
+- [x] P3 — Native argument-tree translation
 - [ ] P4 — Flags (documented fallback)
 - [ ] P5 — Permissions
 - [ ] P6 — Exception handling & feedback
@@ -167,7 +167,7 @@ P2/spec §1.1. Each row of spec §5.2's table is its own item.
       above when no mapper is registered for the component's parser
 - [x] Replace `MinestomCommandRegistrationHandler`'s P2 flat-fallback-only registration with the full
       `CommandTreeTranslator` output
-- [ ] Confirm (and pin with a test) that every generated syntax executor — mapped node or fallback —
+- [x] Confirm (and pin with a test) that every generated syntax executor — mapped node or fallback —
       still re-joins the raw input and dispatches through `executeCommand(...)`; Minestom's own parsed
       argument values are never read into the handler (spec §5.4)
 - [x] ~~Generalize~~ `CloudSuggestionCallback` needed no changes: Minecraft's tab-complete protocol
@@ -179,14 +179,14 @@ P2/spec §1.1. Each row of spec §5.2's table is its own item.
       consumers register or replace mappers, mirroring `CloudBrigadierManager`'s registration API
 - [x] Unit test per built-in mapper (one test class, one method per parser from the list above):
       given a configured Cloud parser, assert the produced `Argument` type and its options
-- [ ] Unit test: a multi-literal, multi-argument command tree translates into the expected nested
+- [x] Unit test: a multi-literal, multi-argument command tree translates into the expected nested
       `Argument` graph shape
-- [ ] Unit test: an optional-argument command produces syntaxes for both the short and long form
-- [ ] Unit test: a consumer-registered custom `ArgumentMapper` is used instead of / alongside the
+- [x] Unit test: an optional-argument command produces syntaxes for both the short and long form
+- [x] Unit test: a consumer-registered custom `ArgumentMapper` is used instead of / alongside the
       built-in set
-- [ ] `@EnvTest`: a bounded `IntegerParser` argument accepts valid input and rejects out-of-range
+- [x] `@EnvTest`: a bounded `IntegerParser` argument accepts valid input and rejects out-of-range
       input with Cloud's own error, proving Cloud (not Minestom) is still the parser (spec §5.4)
-- [ ] `@EnvTest`: suggestions for a mapped node (not the old whole-line fallback) return Cloud's
+- [x] `@EnvTest`: suggestions for a mapped node (not the old whole-line fallback) return Cloud's
       suggestions at the correct cursor position
 
 ## P4 — Flags (documented fallback)
