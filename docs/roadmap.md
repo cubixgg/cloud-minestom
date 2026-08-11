@@ -275,6 +275,8 @@ fallback shape.
 - [x] Unit test: `PlayerParser` parses an exact online name, rejects an unknown/offline name with the
       correct exception type
 - [x] Unit test: `PlayerParser` suggestions list currently-online names only
+- [x] Unit test: `PlayerParser` maps to a single-player-only `Entity` argument (added alongside the
+      mapper item above, see the correction note)
 - [ ] `@EnvTest`: `PlayerParser` resolves and suggests correctly against real virtual players
 
 ## P9 — Annotation commands
