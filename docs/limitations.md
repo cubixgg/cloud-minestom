@@ -33,3 +33,18 @@ to close (spec.md §5.5).
 
 See `CommandTreeTranslator` (`gg.cubix.cloudminestom.registration`) for where this fallback is
 applied during translation.
+
+## An argument named the same as its enclosing literal
+
+Cloud component names become Minestom native argument IDs 1:1 (spec.md §5.1). If a required or
+optional argument is given the *same* name as a literal earlier in the same command path — e.g. a
+component named `"target"` directly under a `.literal("target")` — Minestom's own native command
+parser throws `IllegalStateException: Duplicate key <name>` while collecting parsed arguments,
+because it tracks matched nodes (literals included) by that same ID internally. This is a Minestom
+native-parser quirk, not a `cloud-minestom` bug or a Cloud-level ambiguity: Cloud's own tree has no
+trouble with a component sharing a name with a literal, since Cloud looks components up by tree
+position, not by a single flat ID map.
+
+Give the argument a different name than any literal in its own command path (e.g. `"player"` instead
+of `"target"` for a `/demo target <player>`-style command) to avoid it — this is purely a naming
+choice, not a shape or suggestion trade-off like the flag fallback above.

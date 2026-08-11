@@ -1,9 +1,12 @@
 package gg.cubix.cloudminestom.demo;
 
 import gg.cubix.cloudminestom.MinestomCommandManager;
+import gg.cubix.cloudminestom.parser.PlayerParser;
 import java.util.concurrent.ThreadLocalRandom;
 import net.kyori.adventure.text.Component;
+import net.minestom.server.MinecraftServer;
 import net.minestom.server.command.CommandSender;
+import net.minestom.server.entity.Player;
 import org.incendo.cloud.parser.standard.IntegerParser;
 import org.incendo.cloud.parser.standard.StringParser;
 import org.incendo.cloud.suggestion.SuggestionProvider;
@@ -35,6 +38,32 @@ final class DemoCommands {
                 )
                 .handler(context -> context.sender().sendMessage(
                         rollMessage(context.get("sides"), context.getOrDefault("modifier", "normal")))));
+    }
+
+    /**
+     * {@code /demo target <player>} - a {@link PlayerParser}-based "target a player" command
+     * (spec.md §9/§13): resolves a currently-online player by name or selector, messaging both the
+     * sender and the resolved target. The argument is named {@code "player"}, not {@code "target"} -
+     * naming it the same as the enclosing literal collides at Minestom's native argument-id level.
+     *
+     * @param manager the manager to register against
+     */
+    static void registerTarget(final MinestomCommandManager<CommandSender> manager) {
+        manager.command(manager.commandBuilder("demo")
+                .literal("target")
+                .required("player", PlayerParser.playerParser(
+                        sender -> sender,
+                        () -> MinecraftServer.getConnectionManager().getOnlinePlayers()
+                ))
+                .handler(context -> {
+                    final Player target = context.get("player");
+                    context.sender().sendMessage(Component.text("Targeted " + target.getUsername()));
+                    target.sendMessage(Component.text("You were targeted by " + senderName(context.sender())));
+                }));
+    }
+
+    private static String senderName(final CommandSender sender) {
+        return sender instanceof Player player ? player.getUsername() : "the console";
     }
 
     /**
