@@ -330,7 +330,7 @@ the rest are written, plus the index tying them together.
       with `ArgumentMapperRegistry`'s actual registered set
 - [x] `docs/permissions.md` (spec §6)
 - [x] `docs/annotations.md` — expand the P9 stub into a full page
-- [ ] `docs/threading.md` (spec §4.1, §5.3)
+- [x] `docs/threading.md` (spec §4.1, §5.3)
 - [ ] `docs/help-and-exceptions.md` — expand the P7 stub into a full page, add spec §7 content
 - [ ] `docs/limitations.md` — expand the P4 stub if any further limitations surfaced during P3
 - [ ] `docs/compatibility.md` — Java/Minestom/Cloud version table (spec §2), process note for keeping
