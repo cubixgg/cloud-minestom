@@ -23,7 +23,7 @@ the `net.minestom:testing` integration harness from P2.
 - [x] P9 — Annotation commands
 - [x] P10 — `cloud-minestom-bom`
 - [x] P11 — `minestom-demo`
-- [ ] P12 — Documentation
+- [x] P12 — Documentation
 - [ ] P13 — Claude Code tooling
 - [ ] P14 — Release & CI hardening
 
@@ -342,7 +342,7 @@ the rest are written, plus the index tying them together.
       ahead of the rest of this phase since the decision was already made and needed recording
 - [x] `docs/decisions/0005-ai-assisted-development-with-claude-code.md` — same as above, project-process
       decision recorded as soon as it applied rather than deferred to this phase
-- [ ] `docs/README.md` index page linking all of the above
+- [x] `docs/README.md` index page linking all of the above
 
 ## P13 — Claude Code tooling
 
