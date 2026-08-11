@@ -349,7 +349,7 @@ the rest are written, plus the index tying them together.
 Spec §14. Deferred until the library's real shape exists so the tooling is built against reality, not
 a guess.
 
-- [ ] `.claude/skills/` skill: scaffold a new `ArgumentMapper` (class + registry wiring + unit test
+- [x] `.claude/skills/` skill: scaffold a new `ArgumentMapper` (class + registry wiring + unit test
       stub) for a given Cloud parser type
 - [ ] `.claude/skills/` skill: verify a roadmap item's command round-trips through both the unit and
       `@EnvTest` layers before it gets checked off
