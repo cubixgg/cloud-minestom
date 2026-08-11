@@ -325,7 +325,7 @@ Spec §12. Some pages start as stubs earlier (P4, P7, P9) — this phase is wher
 the rest are written, plus the index tying them together.
 
 - [x] `docs/getting-started.md`
-- [ ] `docs/command-manager.md` (builder options, sender mapping, spec §4)
+- [x] `docs/command-manager.md` (builder options, sender mapping, spec §4)
 - [ ] `docs/argument-mapping.md` — the full mapping table from spec §5.2, written to be kept in sync
       with `ArgumentMapperRegistry`'s actual registered set
 - [ ] `docs/permissions.md` (spec §6)
