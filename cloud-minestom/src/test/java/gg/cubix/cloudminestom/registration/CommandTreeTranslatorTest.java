@@ -15,6 +15,7 @@ import net.minestom.server.command.builder.arguments.ArgumentWord;
 import net.minestom.server.command.builder.arguments.number.ArgumentInteger;
 import org.incendo.cloud.execution.ExecutionCoordinator;
 import org.incendo.cloud.internal.CommandNode;
+import org.incendo.cloud.parser.flag.CommandFlag;
 import org.incendo.cloud.parser.standard.IntegerParser;
 import org.incendo.cloud.parser.standard.StringParser;
 import org.junit.jupiter.api.Test;
@@ -120,6 +121,30 @@ class CommandTreeTranslatorTest {
         assertEquals(1, result.syntaxes().size());
         final Argument<?> nameArgument = result.syntaxes().get(0)[0];
         assertTrue(nameArgument.isOptional());
+    }
+
+    @Test
+    void flagComponentDegradesToATrailingGreedyFallbackWithNativeNodesBeforeIt() {
+        final TestManager manager = new TestManager();
+        manager.command(manager.commandBuilder("test")
+                .required("name", StringParser.stringParser())
+                .flag(CommandFlag.<CommandSender>builder("verbose").build())
+                .flag(CommandFlag.<CommandSender>builder("count").withComponent(IntegerParser.integerParser()).build())
+                .handler(context -> { }));
+
+        final CommandTreeTranslator.Result result = translate(manager, "test");
+
+        final CommandTreeTranslator.TranslatedNode nameNode = result.tree().get(0);
+        assertInstanceOf(ArgumentWord.class, nameNode.argument());
+        assertEquals(1, nameNode.children().size());
+        assertInstanceOf(ArgumentStringArray.class, nameNode.children().get(0).argument());
+        assertEquals(0, nameNode.children().get(0).children().size());
+
+        assertEquals(1, result.syntaxes().size());
+        final Argument<?>[] syntax = result.syntaxes().get(0);
+        assertEquals(2, syntax.length);
+        assertInstanceOf(ArgumentWord.class, syntax[0]);
+        assertInstanceOf(ArgumentStringArray.class, syntax[1]);
     }
 
     private static CommandTreeTranslator.Result translate(final TestManager manager, final String rootName) {

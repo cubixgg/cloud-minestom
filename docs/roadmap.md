@@ -15,7 +15,7 @@ the `net.minestom:testing` integration harness from P2.
 - [x] P1 — Command manager core
 - [x] P2 — Minimal end-to-end registration
 - [x] P3 — Native argument-tree translation
-- [ ] P4 — Flags (documented fallback)
+- [x] P4 — Flags (documented fallback)
 - [ ] P5 — Permissions
 - [ ] P6 — Exception handling & feedback
 - [ ] P7 — Help
@@ -193,13 +193,13 @@ P2/spec §1.1. Each row of spec §5.2's table is its own item.
 
 Spec §5.5. A deliberate, honest limitation, not a gap to quietly leave open.
 
-- [ ] Detect a flag-containing subtree during translation and degrade that subtree to the P2-style
+- [x] Detect a flag-containing subtree during translation and degrade that subtree to the P2-style
       trailing greedy fallback instead of attempting a partial native mapping
-- [ ] Unit test: a command with a flag component produces a trailing greedy fallback node for that
+- [x] Unit test: a command with a flag component produces a trailing greedy fallback node for that
       subtree, and native nodes for everything before it
-- [ ] `@EnvTest`: a flagged command (presence flag and value flag) still executes and parses
+- [x] `@EnvTest`: a flagged command (presence flag and value flag) still executes and parses
       correctly end to end via the fallback path
-- [ ] `docs/limitations.md`: document the flag fallback behavior, referencing spec §5.5
+- [x] `docs/limitations.md`: document the flag fallback behavior, referencing spec §5.5
 
 ## P5 — Permissions
 
