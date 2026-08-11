@@ -43,7 +43,7 @@ A few things carry over from the rest of this library without any extra glue:
 - An `@Argument Player` parameter resolves through `PlayerParser` (spec.md §9) exactly like a
   builder-declared `.required("target", PlayerParser.playerParser(...))` would, since `PlayerParser`
   is registered as `Player`'s default parser on every `MinestomCommandManager` (see
-  `docs/argument-mapping.md`, once P12 lands it).
+  [`argument-mapping.md`](./argument-mapping.md)).
 - `@Permission` is enforced through the same `permissionFunction` configured on the manager builder
   (spec.md §6) — there's no separate annotation-driven permission system to configure.
 - `@Suggestions`-provided suggestion methods surface through the same `CloudSuggestionCallback` bridge
@@ -52,3 +52,48 @@ A few things carry over from the rest of this library without any extra glue:
 
 Builder-declared and annotation-declared commands can be freely mixed against the same manager
 instance, including within the same class hierarchy — there's no "pick one style" restriction.
+
+## Optional arguments
+
+`@Default` makes a parameter optional, the annotation-style equivalent of a builder's `.optional(...)`:
+
+```java
+@Command("roll <sides> [modifier]")
+public void roll(
+        final CommandSender sender,
+        final @Argument("sides") int sides,
+        final @Argument("modifier") @Default("normal") String modifier
+) {
+    // modifier is "normal" whenever the sender omits it
+}
+```
+
+## Custom named parsers
+
+Cloud-annotations has no terse specifier annotation for parser options (there's no built-in
+`@Range(min, max)` in this version, for example). For a parser that needs configuration beyond what a
+plain type conveys, declare a named `@Parser` method and reference it by name:
+
+```java
+@Command("roll <sides>")
+public void roll(final CommandSender sender, final @Argument(value = "sides", parserName = "bounded-die-sides") int sides) {
+    // ...
+}
+
+@Parser(name = "bounded-die-sides")
+public int boundedDieSides(final CommandInput input) {
+    final int value = Integer.parseInt(input.readString());
+    if (value < 2 || value > 100) {
+        throw new IllegalArgumentException("Must be between 2 and 100 (was " + value + ")");
+    }
+    return value;
+}
+```
+
+A thrown exception from a `@Parser` method is automatically wrapped as a parse failure and goes
+through the same default exception feedback as any other rejected argument — see
+[`help-and-exceptions.md`](./help-and-exceptions.md).
+
+See `AnnotatedRollCommand` in `minestom-demo` (`src/main/java/gg/cubix/cloudminestom/demo/`) for this
+whole pattern — optional argument, named parser, suggestions — as a complete, running example
+alongside its builder-declared equivalent.
