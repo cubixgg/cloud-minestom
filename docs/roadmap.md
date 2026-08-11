@@ -328,7 +328,7 @@ the rest are written, plus the index tying them together.
 - [x] `docs/command-manager.md` (builder options, sender mapping, spec §4)
 - [x] `docs/argument-mapping.md` — the full mapping table from spec §5.2, written to be kept in sync
       with `ArgumentMapperRegistry`'s actual registered set
-- [ ] `docs/permissions.md` (spec §6)
+- [x] `docs/permissions.md` (spec §6)
 - [ ] `docs/annotations.md` — expand the P9 stub into a full page
 - [ ] `docs/threading.md` (spec §4.1, §5.3)
 - [ ] `docs/help-and-exceptions.md` — expand the P7 stub into a full page, add spec §7 content
