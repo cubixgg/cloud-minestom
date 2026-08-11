@@ -261,7 +261,7 @@ Spec §9. `PlayerParser` only for v1.0 — anything else is future roadmap, not 
 - [x] `PlayerParser` suggestions: currently-online player names
 - [x] `PlayerParser` selector support (`@s`/`@p`/`@a`/...) via Minestom's `ArgumentEntity` where the
       sender context allows resolution
-- [ ] Register `PlayerParser` with Cloud's `ParserRegistry` by default so a `Player`-typed
+- [x] Register `PlayerParser` with Cloud's `ParserRegistry` by default so a `Player`-typed
       `@Argument`-annotated parameter resolves it automatically (spec §10 parity)
 - [ ] Unit test: `PlayerParser` parses an exact online name, rejects an unknown/offline name with the
       correct exception type

@@ -2,6 +2,8 @@ package gg.cubix.cloudminestom;
 
 import gg.cubix.cloudminestom.argument.ArgumentMapper;
 import gg.cubix.cloudminestom.argument.ArgumentMapperRegistry;
+import gg.cubix.cloudminestom.parser.MinestomCaptionKeys;
+import gg.cubix.cloudminestom.parser.PlayerParser;
 import gg.cubix.cloudminestom.registration.MinestomCommandRegistrationHandler;
 import java.util.Objects;
 import java.util.function.BiPredicate;
@@ -11,8 +13,10 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.command.CommandSender;
 import net.minestom.server.command.builder.Command;
+import net.minestom.server.entity.Player;
 import org.incendo.cloud.CommandManager;
 import org.incendo.cloud.SenderMapper;
+import org.incendo.cloud.caption.CaptionProvider;
 import org.incendo.cloud.caption.CaptionVariable;
 import org.incendo.cloud.caption.StandardCaptionKeys;
 import org.incendo.cloud.exception.NoSuchCommandException;
@@ -20,6 +24,7 @@ import org.incendo.cloud.execution.ExecutionCoordinator;
 import org.incendo.cloud.internal.CommandRegistrationHandler;
 import org.incendo.cloud.minecraft.extras.AudienceProvider;
 import org.incendo.cloud.minecraft.extras.MinecraftExceptionHandler;
+import org.incendo.cloud.parser.ParserDescriptor;
 
 /**
  * Cloud v2 command manager for Minestom (docs/spec.md §4).
@@ -56,6 +61,7 @@ public final class MinestomCommandManager<C> extends CommandManager<C> {
                 new MinestomCommandRegistrationHandler<>(this, commandRegistrationCallback, argumentMapperRegistry)
         );
         exceptionHandlerRegistrar.accept(this);
+        registerDefaultPlayerParser(this);
     }
 
     /**
@@ -84,6 +90,29 @@ public final class MinestomCommandManager<C> extends CommandManager<C> {
                                 CaptionVariable.of("command", ctx.exception().suppliedCommand())
                         )))
                 .registerTo(manager);
+    }
+
+    /**
+     * Registers {@link PlayerParser} as the default Cloud parser for {@link Player}-typed values
+     * (spec.md §9/§10 parity: a {@code @Argument Player} parameter on an annotated command resolves
+     * automatically, the same as a builder-declared {@code .required("target", playerParser(...))}
+     * would). The online-players lookup defers to {@code MinecraftServer.getConnectionManager()} at
+     * call time, not at registration time, for the same reason
+     * {@link Builder#commandRegistrationCallback} defers its own {@code MinecraftServer} lookup.
+     * {@link MinestomCaptionKeys#ARGUMENT_PARSE_FAILURE_PLAYER} has no built-in Cloud caption text, so
+     * a default English value is registered alongside the parser instead of leaving it to throw an
+     * unregistered-caption error at feedback time.
+     */
+    private static <C> void registerDefaultPlayerParser(final MinestomCommandManager<C> manager) {
+        final PlayerParser<C> parser = new PlayerParser<>(
+                sender -> manager.senderMapper().reverse(sender),
+                () -> MinecraftServer.getConnectionManager().getOnlinePlayers()
+        );
+        manager.parserRegistry().registerParser(ParserDescriptor.of(parser, Player.class));
+        manager.captionRegistry().registerProvider(CaptionProvider.<C>constantProvider(
+                MinestomCaptionKeys.ARGUMENT_PARSE_FAILURE_PLAYER,
+                MinestomCaptionKeys.ARGUMENT_PARSE_FAILURE_PLAYER_DEFAULT
+        ));
     }
 
     /**
