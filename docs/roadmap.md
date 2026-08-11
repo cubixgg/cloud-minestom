@@ -49,10 +49,11 @@ Turns the current single-module scaffold into the multi-module layout from spec 
       `src/test/resources` directories — already gone (they were always empty and Git never tracked
       them), nothing to delete
 - [x] Update `settings.gradle.kts` to include `cloud-minestom`, `cloud-minestom-bom`, `minestom-demo`
-- [ ] Create `cloud-minestom/build.gradle.kts`: `java-library` plugin, `api(libs.cloud.core)`,
+- [x] Create `cloud-minestom/build.gradle.kts`: `java-library` plugin, `api(libs.cloud.core)`,
       `api(libs.minestom)`, `api(libs.cloud.minecraft.extras)`, `compileOnly(libs.cloud.annotations)`
       (spec §10 — optional for consumers who don't use annotations), `implementation(libs.slf4j.api)`,
-      JUnit test deps
+      JUnit test deps (also `testImplementation(libs.cloud.annotations)`, needed by later
+      annotation-related tests in P9)
 - [ ] Create `cloud-minestom/src/main/java/gg/cubix/cloudminestom` package root with a placeholder
       compile-anchor class (mirrors the convention of documenting module scope in one landing class)
 - [ ] Create `cloud-minestom-bom/build.gradle.kts`: `java-platform` plugin, empty constraints block
