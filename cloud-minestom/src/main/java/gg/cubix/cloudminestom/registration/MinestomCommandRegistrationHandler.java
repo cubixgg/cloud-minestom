@@ -1,6 +1,7 @@
 package gg.cubix.cloudminestom.registration;
 
 import gg.cubix.cloudminestom.MinestomCommandManager;
+import gg.cubix.cloudminestom.suggestion.CloudSuggestionCallback;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -20,7 +21,8 @@ import org.incendo.cloud.internal.CommandRegistrationHandler;
  * plus a single trailing {@link net.minestom.server.command.builder.arguments.ArgumentStringArray}
  * syntax, both of which re-join the raw input and re-dispatch it through Cloud
  * ({@link org.incendo.cloud.execution.CommandExecutor#executeCommand}) - the flattened bridge
- * described in spec §1.1, not yet the full argument-tree mirroring that lands in P3.
+ * described in spec §1.1, not yet the full argument-tree mirroring that lands in P3. The fallback
+ * syntax's suggestions come from Cloud too, via {@link CloudSuggestionCallback} (spec §5.3).
  *
  * @param <C> the command sender type
  */
@@ -31,6 +33,7 @@ public final class MinestomCommandRegistrationHandler<C> implements CommandRegis
     private final Map<String, Command> registeredRoots = new ConcurrentHashMap<>();
     private final MinestomCommandManager<C> manager;
     private final Consumer<Command> commandRegistrationCallback;
+    private final CloudSuggestionCallback<C> suggestionCallback;
 
     /**
      * Creates a new registration handler.
@@ -45,6 +48,7 @@ public final class MinestomCommandRegistrationHandler<C> implements CommandRegis
     ) {
         this.manager = Objects.requireNonNull(manager, "manager");
         this.commandRegistrationCallback = Objects.requireNonNull(commandRegistrationCallback, "commandRegistrationCallback");
+        this.suggestionCallback = new CloudSuggestionCallback<>(manager);
     }
 
     @Override
@@ -62,6 +66,7 @@ public final class MinestomCommandRegistrationHandler<C> implements CommandRegis
         nativeCommand.setDefaultExecutor(executor);
 
         final Argument<String[]> fallback = ArgumentType.StringArray(FALLBACK_ARGUMENT_NAME);
+        fallback.setSuggestionCallback(this.suggestionCallback);
         nativeCommand.addSyntax(executor, fallback);
 
         this.commandRegistrationCallback.accept(nativeCommand);

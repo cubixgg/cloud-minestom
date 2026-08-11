@@ -118,10 +118,10 @@ Gets one full round trip working — register, execute, suggest — before nativ
       `manager.commandExecutor().executeCommand(mappedSender, line)`
 - [x] Wire `MinestomCommandRegistrationHandler` into `MinestomCommandManager`'s constructor, replacing
       the P1 null-handler stub
-- [ ] `CloudSuggestionCallback`: strips Minestom's trailing-space placeholder character, calls
+- [x] `CloudSuggestionCallback`: strips Minestom's trailing-space placeholder character, calls
       `manager.suggestionFactory().suggestImmediately(mappedSender, input)`, fills the Minestom
       `Suggestion` with the results
-- [ ] Attach `CloudSuggestionCallback` to the fallback `ArgumentStringArray`
+- [x] Attach `CloudSuggestionCallback` to the fallback `ArgumentStringArray`
 - [ ] Unit test: registering a Cloud command against a fake registration sink produces exactly one
       native `Command` with the expected name and aliases
 - [ ] Unit test: registering two syntaxes under the same root literal produces exactly one native
