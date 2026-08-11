@@ -13,7 +13,7 @@ the `net.minestom:testing` integration harness from P2.
 
 - [x] P0 — Repository & build scaffolding
 - [x] P1 — Command manager core
-- [ ] P2 — Minimal end-to-end registration
+- [x] P2 — Minimal end-to-end registration
 - [ ] P3 — Native argument-tree translation
 - [ ] P4 — Flags (documented fallback)
 - [ ] P5 — Permissions
@@ -130,7 +130,7 @@ Gets one full round trip working — register, execute, suggest — before nativ
 - [x] Unit test: suggestion callback returns everything after a trailing-space placeholder
 - [x] Unit test: suggestion callback asks Cloud with the whole line including the root literal, not
       just the trailing text
-- [ ] First `@EnvTest`: register a Cloud command with a handler that sends a message, connect a
+- [x] First `@EnvTest`: register a Cloud command with a handler that sends a message, connect a
       virtual player, run the command, assert the player received the message
 
 ## P3 — Native argument-tree translation

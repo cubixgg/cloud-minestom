@@ -25,4 +25,8 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+
+    // net.minestom:testing's @EnvTest asserts on this flag (ConnectionManager#createPlayer) before
+    // it will let a virtual player connect outside a virtual thread; mirrors Minestom's own build.
+    jvmArgs("-Dminestom.inside-test=true")
 }
