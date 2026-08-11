@@ -255,6 +255,13 @@ Spec §8.
 ## P8 — Custom parsers
 
 Spec §9. `PlayerParser` only for v1.0 — anything else is future roadmap, not a blocker (spec §9).
+**Extended during implementation**: spec §5.2's mapping table only ever listed the built-in Cloud
+parsers that already existed when P3 landed - it never had a row for a parser that didn't exist yet.
+`PlayerParser` has a sane, unambiguous native equivalent (`ArgumentEntity`, constrained to
+`singleEntity(true).onlyPlayers(true)`), so per `CLAUDE.md`'s non-negotiable "add a mapper, don't let it
+silently fall back" rule, an `ArgumentMapper` registration was added as its own item below and spec
+§5.2's table gained a row for it, rather than leaving `PlayerParser` components on the `Word`/`String`
+fallback shape.
 
 - [x] `PlayerParser<C>` in `gg.cubix.cloudminestom.parser`: parses a currently-online player by exact
       name
@@ -263,6 +270,8 @@ Spec §9. `PlayerParser` only for v1.0 — anything else is future roadmap, not 
       sender context allows resolution
 - [x] Register `PlayerParser` with Cloud's `ParserRegistry` by default so a `Player`-typed
       `@Argument`-annotated parameter resolves it automatically (spec §10 parity)
+- [x] Built-in mapper: `PlayerParser` → `Entity` (`singleEntity(true).onlyPlayers(true)`), plus the
+      matching spec §5.2 table row (see the correction note above)
 - [ ] Unit test: `PlayerParser` parses an exact online name, rejects an unknown/offline name with the
       correct exception type
 - [ ] Unit test: `PlayerParser` suggestions list currently-online names only

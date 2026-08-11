@@ -226,6 +226,7 @@ Brigadier-`ArgumentType` mappings. Ships with mappings for:
 | `UUIDParser` | `UUID` |
 | `EnumParser<E>` | `Word` restricted via suggestions (Minestom has no generic native enum node; see below) |
 | `DurationParser` | `Time` (best effort — Cloud's duration grammar and Minestom's tick-based `Time` argument don't fully agree; documented mismatch, not silently coerced) |
+| `PlayerParser` ([§9](#9-custom-parsers-shipped-with-the-library)) | `Entity`, constrained to `singleEntity(true).onlyPlayers(true)` |
 
 Every mapped node still gets its suggestions from Cloud (`setSuggestionCallback`, [§5.3](#53-suggestions)),
 **not** from Minestom's native validation, even when a native type exists — this is deliberate, see

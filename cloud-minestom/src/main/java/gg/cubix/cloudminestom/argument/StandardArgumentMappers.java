@@ -1,5 +1,6 @@
 package gg.cubix.cloudminestom.argument;
 
+import gg.cubix.cloudminestom.parser.PlayerParser;
 import java.time.Duration;
 import java.util.UUID;
 import net.minestom.server.command.builder.arguments.Argument;
@@ -8,6 +9,7 @@ import net.minestom.server.command.builder.arguments.number.ArgumentDouble;
 import net.minestom.server.command.builder.arguments.number.ArgumentFloat;
 import net.minestom.server.command.builder.arguments.number.ArgumentInteger;
 import net.minestom.server.command.builder.arguments.number.ArgumentLong;
+import net.minestom.server.entity.Player;
 import org.incendo.cloud.component.CommandComponent;
 import org.incendo.cloud.parser.ArgumentParser;
 import org.incendo.cloud.parser.standard.BooleanParser;
@@ -39,6 +41,7 @@ final class StandardArgumentMappers {
         registry.register(UUIDParser.class, StandardArgumentMappers::mapUuid);
         registry.register(EnumParser.class, StandardArgumentMappers::mapEnum);
         registry.register(DurationParser.class, StandardArgumentMappers::mapDuration);
+        registry.register(PlayerParser.class, StandardArgumentMappers::mapPlayer);
     }
 
     private static Argument<?> mapString(final CommandComponent<?> component, final ArgumentParser<?, String> parser) {
@@ -122,5 +125,13 @@ final class StandardArgumentMappers {
         // Native shape only; Cloud remains the actual parser (spec §5.4), so this is a client-side
         // coloring quirk, not a functional gap - not silently coerced into matching either grammar.
         return ArgumentType.Time(component.name());
+    }
+
+    private static Argument<?> mapPlayer(final CommandComponent<?> component, final ArgumentParser<?, Player> parser) {
+        // Unlike every other mapping here, PlayerParser's native counterpart (ArgumentEntity) has a
+        // sane, unambiguous shape - a single-player-only target selector - so it gets a real mapping
+        // instead of falling back to Word (spec §9's own note re-stated by CLAUDE.md: don't let a
+        // parser with a sane native equivalent silently fall back).
+        return ArgumentType.Entity(component.name()).singleEntity(true).onlyPlayers(true);
     }
 }
