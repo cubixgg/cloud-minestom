@@ -21,7 +21,7 @@ the `net.minestom:testing` integration harness from P2.
 - [x] P7 — Help
 - [x] P8 — Custom parsers
 - [x] P9 — Annotation commands
-- [ ] P10 — `cloud-minestom-bom`
+- [x] P10 — `cloud-minestom-bom`
 - [ ] P11 — `minestom-demo`
 - [ ] P12 — Documentation
 - [ ] P13 — Claude Code tooling
@@ -299,7 +299,7 @@ Spec §3.2.
 
 - [x] `cloud-minestom-bom/build.gradle.kts`: constraints for `cloud-minestom`, `cloud-core`,
       `cloud-annotations`, `cloud-minecraft-extras` at the versions pinned in `libs.versions.toml`
-- [ ] Manual verification (documented in the PR description, not a unit test): a throwaway consumer
+- [x] Manual verification (documented in the PR description, not a unit test): a throwaway consumer
       project importing only the BOM resolves all four artifacts without further version pins
 
 ## P11 — `minestom-demo`
