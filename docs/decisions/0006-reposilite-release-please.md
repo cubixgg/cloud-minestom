@@ -10,9 +10,9 @@ consumable dependency, and stays unpublished. Spec.md §2 originally specified M
 distribution target with per-commit snapshot publishing - written before an actual publishing target
 existed to build against. Neither of those turned out to be the real plan: this project instead
 publishes to a self-hosted [Reposilite](https://reposilite.com/) instance at
-`https://maven.cubix.gg/public-releases`, the same pattern already proven out in the `minecraft-platform`
-repo (its own `docs/decisions/0006-reposilite-release-please.md`), minus that repo's Docker/Harbor
-image-retagging concerns - `cloud-minestom` has no container images to publish.
+`https://maven.cubix.gg/public-releases`, the same pattern already proven out in a sibling internal
+repo of the org (its own `docs/decisions/0006-reposilite-release-please.md`), minus that repo's
+Docker/Harbor image-retagging concerns - `cloud-minestom` has no container images to publish.
 
 Versioning needed a single source of truth that couldn't drift from what's actually tagged and
 published. [`release-please`](https://github.com/googleapis/release-please) computes the next semver
@@ -49,8 +49,8 @@ triggers an actual release.
 Maven Central requires a registered Sonatype namespace and GPG-signed artifacts - real infrastructure
 this project doesn't have set up, and no consumer outside this org needs Central specifically today.
 Reposilite is already the org's standing choice for exactly this kind of internal library artifact
-(the same instance `minecraft-platform`'s own published modules use), so reusing it instead of standing
-up a second publishing target was the pragmatic call. If a genuine public/Central-distribution need
+(the same instance that sibling internal repo's own published modules use), so reusing it instead of
+standing up a second publishing target was the pragmatic call. If a genuine public/Central-distribution need
 shows up later, that's a new decision to make then, not a default to guess at now.
 
 ## Consequences
@@ -60,13 +60,13 @@ shows up later, that's a new decision to make then, not a default to guess at no
   matching `CONTRIBUTING.md`'s rule that a spec.md gap found during implementation gets fixed in the
   same commit, not left to drift.
 - `CHANGELOG.md` is not hand-seeded: release-please generates it itself from Conventional Commit
-  history the first time it opens a release PR, the same way `minecraft-platform`'s was.
+  history the first time it opens a release PR, the same way that sibling repo's was.
 - A snapshot-publishing pipeline, if ever added, needs a Reposilite retention policy decided first -
-  this is the same conclusion `minecraft-platform`'s own ADR reached, not a new judgment call.
+  this is the same conclusion that sibling repo's own ADR reached, not a new judgment call.
 
 ## References
 
 - [`spec.md`](../spec.md) §2 (Target audience & compatibility), §3 (Module architecture)
 - [`CONTRIBUTING.md`](../../CONTRIBUTING.md) (Conventional Commits, squash-merge-only workflow)
-- `minecraft-platform`'s own `docs/decisions/0006-reposilite-release-please.md` - the proven-out
+- A sibling internal repo's own `docs/decisions/0006-reposilite-release-please.md` - the proven-out
   pattern this decision reuses, minus its Docker/Harbor-specific parts
