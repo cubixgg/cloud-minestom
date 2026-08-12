@@ -1,7 +1,6 @@
 # cloud-minestom
 
 [![Build](https://img.shields.io/github/actions/workflow/status/cubixgg/cloud-minestom/build.yml?branch=main)](https://github.com/cubixgg/cloud-minestom/actions)
-[![Maven Central](https://img.shields.io/maven-central/v/gg.cubix.cloudminestom/cloud-minestom)](https://central.sonatype.com/artifact/gg.cubix.cloudminestom/cloud-minestom)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 
 A full [Cloud v2](https://cloud.incendo.org) command framework integration for
@@ -31,9 +30,14 @@ example below is the target API, not something you can `implementation(...)` tod
 
 ## Usage
 
-Once published (see [Status](#status)), add the BOM and the library:
+Once published (see [Status](#status)), add the [Reposilite](https://reposilite.com/) repository, then
+the BOM and the library:
 
 ```kotlin
+repositories {
+    maven("https://maven.cubix.gg/public-releases")
+}
+
 dependencies {
     implementation(platform("gg.cubix.cloudminestom:cloud-minestom-bom:<version>"))
     implementation("gg.cubix.cloudminestom:cloud-minestom")
