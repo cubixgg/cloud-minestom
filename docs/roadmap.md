@@ -25,7 +25,7 @@ the `net.minestom:testing` integration harness from P2.
 - [x] P11 — `minestom-demo`
 - [x] P12 — Documentation
 - [x] P13 — Claude Code tooling
-- [ ] P14 — Release & CI hardening
+- [x] P14 — Release & CI hardening
 
 ---
 
@@ -384,5 +384,5 @@ Java/Minestom/Cloud versions, not where `cloud-minestom` itself is published.
       PR body it generates), not a second copy of it here
 - [x] `CHANGELOG.md` — not hand-seeded; `release-please` generated it itself when it opened its first
       release PR (#20, `v1.1.0`)
-- [ ] 1.0.0 release checklist: every phase above checked, `./gradlew build` green, `minestom-demo`
+- [x] 1.0.0 release checklist: every phase above checked, `./gradlew build` green, `minestom-demo`
       manually run end to end
