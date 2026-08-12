@@ -384,8 +384,7 @@ Java/Minestom/Cloud versions, not where `cloud-minestom` itself is published.
       `docs/compatibility.md`'s table covers - the reminder to update that table in the same PR is
       `docs/compatibility.md`'s own existing process note (Dependabot can't inject custom text into a
       PR body it generates), not a second copy of it here
-- [ ] `CHANGELOG.md` — not hand-seeded; `release-please` generates it itself from Conventional Commit
-      history the moment it opens its first release PR. Check this off once that's happened, not before
-      (the file doesn't exist in the repo yet).
+- [x] `CHANGELOG.md` — not hand-seeded; `release-please` generated it itself when it opened its first
+      release PR (#20, `v1.1.0`)
 - [ ] 1.0.0 release checklist: every phase above checked, `./gradlew build` green, `minestom-demo`
       manually run end to end
