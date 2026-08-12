@@ -94,13 +94,17 @@ Details and the reasoning behind this split are in `CLAUDE.md`'s Testing section
 
 ## Deployment / publishing
 
-- Every commit on `main` publishes a snapshot (`cloud-minestom` + `cloud-minestom-bom`) to a snapshot
-  repository.
-- Tagged releases publish to Maven Central.
+- `cloud-minestom` + `cloud-minestom-bom` publish to a self-hosted
+  [Reposilite](https://reposilite.com/) instance at `https://maven.cubix.gg/public-releases` — not
+  Maven Central, and not on every commit. [`release-please`](https://github.com/googleapis/release-please)
+  computes the version from Conventional Commits and opens a release PR; merging it is what triggers
+  the actual publish (`.github/workflows/release-please.yml`). See
+  [ADR-0006](./docs/decisions/0006-reposilite-release-please.md) for why.
 - The compatibility table in [`docs/compatibility.md`](./docs/compatibility.md) tracks which
   Java/Minestom/Cloud versions a given release was built and tested against.
 
-(Both publishing workflows are `roadmap.md` P14 items and not live yet.)
+(Not live yet — the workflow needs `REPOSILITE_USERNAME`/`REPOSILITE_PASSWORD` repo secrets before a
+release can actually publish; see `roadmap.md` P14.)
 
 ## Contributing
 

@@ -1,0 +1,24 @@
+version: 2
+updates:
+  - package-ecosystem: "gradle"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+    groups:
+      # Minestom/Cloud/Adventure are exactly what docs/compatibility.md's table covers - grouping
+      # their bumps into one PR (instead of one PR per artifact) keeps that reminder to one place to
+      # act on, rather than N near-duplicate PRs each needing the same doc update.
+      minestom-cloud:
+        patterns:
+          - "net.minestom:*"
+          - "org.incendo:*"
+          - "net.kyori:*"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"

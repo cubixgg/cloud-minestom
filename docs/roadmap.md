@@ -359,10 +359,33 @@ a guess.
 
 ## P14 — Release & CI hardening
 
-- [ ] Snapshot publishing workflow on every `main` commit (spec §2 distribution)
-- [ ] Tagged-release publishing workflow for `cloud-minestom` + `cloud-minestom-bom` to Maven Central
-- [ ] Dependency-update automation (Renovate or Dependabot) tracking Minestom/Cloud version bumps,
-      with a reminder to update `docs/compatibility.md` in the same PR
-- [ ] `CHANGELOG.md` seeded, Conventional-Commits-driven per `CONTRIBUTING.md`
+**Corrected during implementation:** the two publishing items below originally specified Maven
+Central with per-commit snapshot publishing, written before an actual publishing target existed to
+build against. The real target is a self-hosted Reposilite instance
+(`https://maven.cubix.gg/public-releases`), release-triggered only via
+[release-please](https://github.com/googleapis/release-please) - see
+[ADR-0006](./decisions/0006-reposilite-release-please.md) and spec.md §2's own correction note for the
+full reasoning. `docs/compatibility.md` doesn't need a distribution-target update since it only covers
+Java/Minestom/Cloud versions, not where `cloud-minestom` itself is published.
+
+- [x] Snapshot publishing: deliberately **not built**, not forgotten - Reposilite has no built-in
+      artifact retention/eviction, so per-commit snapshots would need a retention policy sorted out
+      first, and there's no consumer needing pre-release artifacts yet (ADR-0006)
+- [ ] Tagged-release publishing workflow for `cloud-minestom` + `cloud-minestom-bom` to Reposilite,
+      driven by `release-please` (`.github/workflows/release-please.yml`,
+      `release-please-config.json`, `.release-please-manifest.json`): the Gradle `maven-publish` wiring
+      is in place and manually verified via `publishToMavenLocal` (both modules produce the expected
+      POM/coordinates), but the workflow itself can't be exercised end-to-end without the
+      `REPOSILITE_USERNAME`/`REPOSILITE_PASSWORD` repo secrets existing - check this off once a real
+      release has actually published successfully, not before (per the `verify-roadmap-item` skill)
+- [x] Dependency-update automation: `.github/dependabot.yml`, `gradle` + `github-actions` ecosystems,
+      weekly. Minestom/Cloud/Adventure bumps are grouped into one PR (Dependabot's `groups`, matched
+      by Maven group id) rather than one PR per artifact, since they're exactly what
+      `docs/compatibility.md`'s table covers - the reminder to update that table in the same PR is
+      `docs/compatibility.md`'s own existing process note (Dependabot can't inject custom text into a
+      PR body it generates), not a second copy of it here
+- [ ] `CHANGELOG.md` — not hand-seeded; `release-please` generates it itself from Conventional Commit
+      history the moment it opens its first release PR. Check this off once that's happened, not before
+      (the file doesn't exist in the repo yet).
 - [ ] 1.0.0 release checklist: every phase above checked, `./gradlew build` green, `minestom-demo`
       manually run end to end
