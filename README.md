@@ -16,13 +16,14 @@ tradeoff this project deliberately does not take.
 
 ## Status
 
-Early development. [`roadmap.md`](./docs/roadmap.md) is the authoritative list of what's built and what's
-next, broken into small, individually-shippable steps. Nothing here is published yet — the usage
-example below is the target API, not something you can `implementation(...)` today.
+Feature-complete: [`roadmap.md`](./docs/roadmap.md) is the authoritative checklist, and everything
+except release housekeeping (P14) is done. The one piece not true yet: no release has successfully
+published to Reposilite (see [Deployment / publishing](#deployment--publishing)), so the usage example
+below is the target API, not something you can `implementation(...)` today.
 
 ## Modules
 
-| Module | Published | Purpose |
+| Module | Publishes to Reposilite | Purpose |
 |---|---|---|
 | `cloud-minestom` | yes | the library |
 | `cloud-minestom-bom` | yes | version-aligned BOM for `cloud-minestom` + the `cloud-*` versions it needs |
@@ -107,8 +108,9 @@ Details and the reasoning behind this split are in `CLAUDE.md`'s Testing section
 - The compatibility table in [`docs/compatibility.md`](./docs/compatibility.md) tracks which
   Java/Minestom/Cloud versions a given release was built and tested against.
 
-(Not live yet — the workflow needs `REPOSILITE_USERNAME`/`REPOSILITE_PASSWORD` repo secrets before a
-release can actually publish; see `roadmap.md` P14.)
+(Not live yet — the `v1.1.0` release tagged successfully, but the publish step failed: the
+`public-releases` repository doesn't exist yet on the `maven.cubix.gg` Reposilite instance. Repo
+secrets are already configured; see `roadmap.md` P14.)
 
 ## Contributing
 
