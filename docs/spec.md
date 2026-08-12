@@ -73,8 +73,15 @@ its own, can adopt it through the `SenderMapper` seam described in [§4](#4-comm
   `org.incendo:cloud-minecraft-extras` 2.x. Starting pins: `cloud` 2.1.0, `cloud-minecraft-extras`
   2.0.0 — a combination already confirmed to work together against a recent Minestom build, not a
   guess.
-- **Distribution:** Maven Central under group `gg.cubix.cloudminestom`, artifact `cloud-minestom`
-  (plus `cloud-minestom-bom`). Snapshots to a snapshot repository for every commit on `main`.
+- **Distribution:** self-hosted [Reposilite](https://reposilite.com/) at
+  `https://maven.cubix.gg/public-releases`, under group `gg.cubix.cloudminestom`, artifact
+  `cloud-minestom` (plus `cloud-minestom-bom`) — not Maven Central, and not per-commit snapshots.
+  **Correction (found during `roadmap.md` P14 implementation):** this originally specified Maven
+  Central with per-commit snapshot publishing, written before an actual publishing target existed to
+  build against. [ADR-0006](./decisions/0006-reposilite-release-please.md) has the full reasoning:
+  Reposilite is the org's existing publishing target for this kind of internal library artifact, and
+  release-triggered-only (via [release-please](https://github.com/googleapis/release-please), a single
+  repo-wide semver) avoids needing a Reposilite retention policy before it's actually needed.
 - **Dependency management:** every dependency version, across every module, is declared exactly once
   in `gradle/libs.versions.toml` using [Gradle's built-in version
   catalog](https://docs.gradle.org/current/userguide/platforms.html) — no module's `build.gradle.kts`
