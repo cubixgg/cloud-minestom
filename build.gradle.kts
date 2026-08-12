@@ -7,7 +7,7 @@ val publishedModules = setOf("cloud-minestom", "cloud-minestom-bom")
 
 subprojects {
     group = "gg.cubix.cloudminestom"
-    version = "1.0.0" // x-release-please-version
+    version = "1.1.0" // x-release-please-version
 
     repositories {
         mavenCentral()
