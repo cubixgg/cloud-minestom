@@ -378,8 +378,12 @@ Java/Minestom/Cloud versions, not where `cloud-minestom` itself is published.
       POM/coordinates), but the workflow itself can't be exercised end-to-end without the
       `REPOSILITE_USERNAME`/`REPOSILITE_PASSWORD` repo secrets existing - check this off once a real
       release has actually published successfully, not before (per the `verify-roadmap-item` skill)
-- [ ] Dependency-update automation (Renovate or Dependabot) tracking Minestom/Cloud version bumps,
-      with a reminder to update `docs/compatibility.md` in the same PR
+- [x] Dependency-update automation: `.github/dependabot.yml`, `gradle` + `github-actions` ecosystems,
+      weekly. Minestom/Cloud/Adventure bumps are grouped into one PR (Dependabot's `groups`, matched
+      by Maven group id) rather than one PR per artifact, since they're exactly what
+      `docs/compatibility.md`'s table covers - the reminder to update that table in the same PR is
+      `docs/compatibility.md`'s own existing process note (Dependabot can't inject custom text into a
+      PR body it generates), not a second copy of it here
 - [ ] `CHANGELOG.md` — not hand-seeded; `release-please` generates it itself from Conventional Commit
       history the moment it opens its first release PR. Check this off once that's happened, not before
       (the file doesn't exist in the repo yet).
