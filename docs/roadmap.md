@@ -371,13 +371,11 @@ Java/Minestom/Cloud versions, not where `cloud-minestom` itself is published.
 - [x] Snapshot publishing: deliberately **not built**, not forgotten - Reposilite has no built-in
       artifact retention/eviction, so per-commit snapshots would need a retention policy sorted out
       first, and there's no consumer needing pre-release artifacts yet (ADR-0006)
-- [ ] Tagged-release publishing workflow for `cloud-minestom` + `cloud-minestom-bom` to Reposilite,
+- [x] Tagged-release publishing workflow for `cloud-minestom` + `cloud-minestom-bom` to Reposilite,
       driven by `release-please` (`.github/workflows/release-please.yml`,
-      `release-please-config.json`, `.release-please-manifest.json`): the Gradle `maven-publish` wiring
-      is in place and manually verified via `publishToMavenLocal` (both modules produce the expected
-      POM/coordinates), but the workflow itself can't be exercised end-to-end without the
-      `REPOSILITE_USERNAME`/`REPOSILITE_PASSWORD` repo secrets existing - check this off once a real
-      release has actually published successfully, not before (per the `verify-roadmap-item` skill)
+      `release-please-config.json`, `.release-please-manifest.json`): `v1.1.0` published successfully -
+      `cloud-minestom-1.1.0.jar`/`.pom` and `cloud-minestom-bom-1.1.0.pom` are live under
+      `https://maven.cubix.gg/public-releases/gg/cubix/cloudminestom/`
 - [x] Dependency-update automation: `.github/dependabot.yml`, `gradle` + `github-actions` ecosystems,
       weekly. Minestom/Cloud/Adventure bumps are grouped into one PR (Dependabot's `groups`, matched
       by Maven group id) rather than one PR per artifact, since they're exactly what
