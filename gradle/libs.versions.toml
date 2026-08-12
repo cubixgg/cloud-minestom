@@ -13,7 +13,7 @@ cloud-minecraft = "2.0.0"
 # Pinned to what the Minestom version above actually ships, per its own gradle/libs.versions.toml.
 adventure = "5.2.0"
 slf4j = "2.0.18"
-junit = "6.1.2"
+junit = "6.1.3"
 
 [libraries]
 minestom = { module = "net.minestom:minestom", version.ref = "minestom" }
