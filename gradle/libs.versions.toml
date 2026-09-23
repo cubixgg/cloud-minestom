@@ -3,13 +3,13 @@
 java = "25"
 # Minestom uses calendar+semver tags (YYYY.MM.DD-<minecraft-version>). Check for updates against
 # https://github.com/Minestom/Minestom/releases; keep docs/compatibility.md in sync on every bump.
-minestom = "2026.08.28-26.2"
+minestom = "2026.09.12-26.2"
 # org.incendo:cloud-core and org.incendo:cloud-annotations are both published from the Incendo/cloud
 # monorepo under the same tag - cloud-annotations tracks this version, not `cloud-minecraft` below.
 cloud = "2.1.0"
 # org.incendo:cloud-minecraft-extras is published from the separate Incendo/cloud-minecraft monorepo,
 # which currently trails the core `cloud` version (2.0.0 vs. 2.1.0) - do not assume they move in lockstep.
-cloud-minecraft = "2.0.0"
+cloud-minecraft = "2.0.1"
 # Pinned to what the Minestom version above actually ships, per its own gradle/libs.versions.toml.
 adventure = "5.2.0"
 slf4j = "2.0.19"
