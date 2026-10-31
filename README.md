@@ -22,8 +22,7 @@ published to Reposilite (see [Deployment / publishing](#deployment--publishing))
 below is the target API, not something you can `implementation(...)` today.
 
 One current limitation: commands registered through this library stay registered for the lifetime of
-the server; there is no `unregisterCommand` or command-removal lifecycle, because removing a
-registered root command from Minestom's native command manager is not supported.
+the server. There is no `unregisterCommand` or other command-removal lifecycle yet.
 
 ## Modules
 
