@@ -163,6 +163,13 @@ public final class MinestomCommandManager<C> extends CommandManager<C> {
     /**
      * Builder for {@link MinestomCommandManager}.
      *
+     * <p>Two defaults worth knowing before you override them: {@code permissionFunction}
+     * allows every sender every permission until replaced (the pinned Minestom version has
+     * no native permission-node system to check against), and {@code
+     * commandRegistrationCallback} resolves {@code MinecraftServer.getCommandManager()}
+     * lazily on first command registration, so the builder and manager can be constructed
+     * before {@code MinecraftServer.init()}.
+     *
      * @param <C> the command sender type
      */
     public static final class Builder<C> {

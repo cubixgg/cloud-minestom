@@ -21,6 +21,9 @@ except release housekeeping (P14) is done. The one piece not true yet: no releas
 published to Reposilite (see [Deployment / publishing](#deployment--publishing)), so the usage example
 below is the target API, not something you can `implementation(...)` today.
 
+One current limitation: commands registered through this library stay registered for the lifetime of
+the server. There is no `unregisterCommand` or other command-removal lifecycle yet.
+
 ## Modules
 
 | Module | Publishes to Reposilite | Purpose |
