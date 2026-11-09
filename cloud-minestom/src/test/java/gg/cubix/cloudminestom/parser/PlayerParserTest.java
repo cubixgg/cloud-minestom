@@ -2,6 +2,7 @@ package gg.cubix.cloudminestom.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import gg.cubix.cloudminestom.MinestomCommandManager;
 import java.net.SocketAddress;
@@ -70,6 +71,31 @@ class PlayerParserTest {
         final Iterable<String> suggestions = this.parser.stringSuggestions(context(), CommandInput.empty());
 
         assertEquals(Set.of("Steve", "Alex"), StreamSupport.stream(suggestions.spliterator(), false).collect(Collectors.toSet()));
+    }
+
+    @Test
+    void failsFastWhenTheOnlinePlayersSupplierReturnsNullDuringParsing() {
+        final PlayerParser<CommandSender> brokenSupplierParser =
+                new PlayerParser<>(sender -> sender, () -> null);
+
+        // a null supplier result is a caller bug; it must surface as a clear message at the
+        // mistake, not as an NPE deep inside the parse loop
+        final IllegalStateException error = assertThrows(
+                IllegalStateException.class,
+                () -> brokenSupplierParser.parse(context(), CommandInput.of("Steve")));
+        assertEquals(
+                "onlinePlayers supplier returned null - it must supply the currently-online "
+                        + "players (possibly empty), never null",
+                error.getMessage());
+    }
+
+    @Test
+    void failsFastWhenTheOnlinePlayersSupplierReturnsNullDuringSuggestionLookup() {
+        final PlayerParser<CommandSender> brokenSupplierParser =
+                new PlayerParser<>(sender -> sender, () -> null);
+
+        assertThrows(IllegalStateException.class,
+                () -> brokenSupplierParser.stringSuggestions(context(), CommandInput.empty()));
     }
 
     private static CommandContext<CommandSender> context() {

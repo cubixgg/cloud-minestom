@@ -36,7 +36,10 @@ public final class CloudSuggestionCallback<C> implements SuggestionCallback {
     @Override
     public void apply(final CommandSender sender, final CommandContext context, final Suggestion suggestion) {
         final String input = stripTrailingPlaceholder(context.getInput());
-        final C mappedSender = this.manager.senderMapper().map(sender);
+        final C mappedSender = Objects.requireNonNull(
+                this.manager.senderMapper().map(sender),
+                () -> "senderMapper mapped " + sender + " to null - a SenderMapper must map every "
+                        + "CommandSender to a non-null value, or tab-completion fails here for every player");
 
         final Suggestions<C, ? extends org.incendo.cloud.suggestion.Suggestion> suggestions =
                 this.manager.suggestionFactory().suggestImmediately(mappedSender, input);

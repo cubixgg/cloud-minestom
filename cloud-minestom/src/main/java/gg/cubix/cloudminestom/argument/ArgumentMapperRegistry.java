@@ -1,9 +1,9 @@
 package gg.cubix.cloudminestom.argument;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import net.minestom.server.command.builder.arguments.Argument;
 import org.incendo.cloud.component.CommandComponent;
 import org.incendo.cloud.parser.ArgumentParser;
@@ -12,10 +12,15 @@ import org.incendo.cloud.parser.ArgumentParser;
  * Registers and looks up {@link ArgumentMapper}s by Cloud parser class (docs/spec.md §5.2), mirroring
  * how {@code CloudBrigadierManager} lets consumers register Cloud-parser → Brigadier-{@code ArgumentType}
  * mappings.
+ *
+ * <p>{@link #register} and lookup are public API without a "registration only before server start"
+ * contract, and both run on any caller's thread (typically setup before start, mapping on request
+ * threads) - the backing map is therefore a {@link ConcurrentHashMap}, making concurrent use safe
+ * rather than an invisible data race.
  */
 public final class ArgumentMapperRegistry {
 
-    private final Map<Class<?>, ArgumentMapper<?>> mappers = new HashMap<>();
+    private final Map<Class<?>, ArgumentMapper<?>> mappers = new ConcurrentHashMap<>();
 
     /**
      * Creates an empty registry with no mappers.

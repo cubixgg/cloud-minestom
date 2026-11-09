@@ -102,7 +102,7 @@ public final class PlayerParser<C> implements ArgumentParser<C, Player>, Blockin
             return parseSelector(commandContext, input);
         }
 
-        for (final Player player : this.onlinePlayers.get()) {
+        for (final Player player : onlinePlayers()) {
             if (player.getUsername().equalsIgnoreCase(input)) {
                 return ArgumentParseResult.success(player);
             }
@@ -129,7 +129,23 @@ public final class PlayerParser<C> implements ArgumentParser<C, Player>, Blockin
 
     @Override
     public Iterable<String> stringSuggestions(final CommandContext<C> commandContext, final CommandInput input) {
-        return this.onlinePlayers.get().stream().map(Player::getUsername).toList();
+        return onlinePlayers().stream().map(Player::getUsername).toList();
+    }
+
+    /**
+     * Fails fast with a clear message when the supplier misbehaves: a {@code null} from
+     * {@code onlinePlayers} is a caller bug (the contract is "currently-online players,
+     * possibly empty"), and without this guard it surfaces as an NPE deep inside parsing
+     * or suggestion lookup instead of at the actual mistake.
+     */
+    private Collection<Player> onlinePlayers() {
+        final Collection<Player> online = this.onlinePlayers.get();
+        if (online == null) {
+            throw new IllegalStateException(
+                    "onlinePlayers supplier returned null - it must supply the currently-online "
+                            + "players (possibly empty), never null");
+        }
+        return online;
     }
 
     /**
