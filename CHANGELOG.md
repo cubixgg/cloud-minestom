@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/cubixgg/cloud-minestom/compare/v1.1.0...v1.1.1) (2026-11-13)
+
+
+### Bug Fixes
+
+* **cloud-minestom:** fail fast with clear messages on caller mistakes ([#44](https://github.com/cubixgg/cloud-minestom/issues/44)) ([5f234cd](https://github.com/cubixgg/cloud-minestom/commit/5f234cd446ba2e223902166d5c48cebb000673ed))
+
 ## [1.1.0](https://github.com/cubixgg/cloud-minestom/compare/v1.0.0...v1.1.0) (2026-08-12)
 
 
